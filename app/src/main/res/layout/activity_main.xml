@@ -4,13 +4,14 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dai.zero.MainActivity">
+    tools:context="com.dai.zero.main.MainActivity">
 
     <include
         android:id="@+id/include_app_bar_main"
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 
     <include
         android:id="@+id/include_nav_header_main"
