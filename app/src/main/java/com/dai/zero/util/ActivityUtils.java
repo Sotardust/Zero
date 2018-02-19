@@ -42,4 +42,24 @@ public class ActivityUtils {
         transaction.commit();
     }
 
+    /**
+     * The {@code fragment} is added to the container view with id {@code frameId}. The operation is
+     * performed by the {@code fragmentManager}.
+     *
+     */
+    public static void changeFragment(@NonNull FragmentManager fragmentManager,
+                                              @NonNull Fragment fragment, int frameId) {
+        checkNotNull(fragmentManager);
+        checkNotNull(fragment);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(frameId, fragment);
+        transaction.commit();
+    }
+
+    public static void changeFragment(@NonNull FragmentTransaction transaction,
+                                      @NonNull Fragment fragment, int frameId) {
+        transaction.replace(frameId, fragment);
+        transaction.commit();
+    }
+
 }

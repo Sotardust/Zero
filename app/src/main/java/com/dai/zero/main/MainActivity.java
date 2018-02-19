@@ -3,7 +3,9 @@ package com.dai.zero.main;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -13,8 +15,14 @@ import android.widget.RadioGroup;
 
 import com.dai.zero.BaseActivity;
 import com.dai.zero.R;
+import com.dai.zero.adapter.MainFragmentPageAdapter;
+import com.dai.zero.main.Leftmain.LeftMainFragment;
 import com.dai.zero.main.main.MainFragment;
+import com.dai.zero.main.rightmain.RightMainFragment;
 import com.dai.zero.util.ActivityUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -37,7 +45,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.contentFrame)
-    FrameLayout contentFrame;
+    ViewPager contentFrame;
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
 
@@ -46,6 +54,10 @@ public class MainActivity extends BaseActivity {
 
     @Inject
     MainFragment mainFragment;
+    @Inject
+    LeftMainFragment leftMainFragment;
+    @Inject
+    RightMainFragment rightMainFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +71,41 @@ public class MainActivity extends BaseActivity {
 //            mainFragment = mainFragmentProvider.get();
 //            System.out.println("mainFragment = " + mainFragment);
 //        }
+
+        List<Fragment> mFragmentList = new ArrayList<>();
+        mFragmentList.add(leftMainFragment);
+        mFragmentList.add(mainFragment);
+        mFragmentList.add(rightMainFragment);
+        contentFrame.setAdapter(new MainFragmentPageAdapter(getSupportFragmentManager(), mFragmentList));
+        contentFrame.setCurrentItem(1);
+        contentFrame.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        rgHomeViewpagerContorl.check(R.id.rb_home_pager);
+                        break;
+                    case 1:
+                        rgHomeViewpagerContorl.check(R.id.rb_music_pager);
+                        break;
+                    case 2:
+                        rgHomeViewpagerContorl.check(R.id.rb_friend_pager);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
     }
 
 
@@ -107,14 +154,14 @@ public class MainActivity extends BaseActivity {
 
                         switch (i) {
                             case R.id.rb_home_pager:
-//                                contentFrame.setCurrentItem(0);// 设置当前页面
+                                contentFrame.setCurrentItem(0);// 设置当前页面
 //                        vpContent.setCurrentItem(0,false);// false去掉viewpager切换页面的动画
                                 break;
                             case R.id.rb_music_pager:
-//                                vpContent.setCurrentItem(1);
+                                contentFrame.setCurrentItem(1);
                                 break;
                             case R.id.rb_friend_pager:
-//                                vpContent.setCurrentItem(2);
+                                contentFrame.setCurrentItem(2);
                                 break;
                         }
                     }
