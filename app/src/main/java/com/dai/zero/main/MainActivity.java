@@ -1,16 +1,16 @@
 package com.dai.zero.main;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.dai.zero.BaseActivity;
@@ -19,7 +19,6 @@ import com.dai.zero.adapter.MainFragmentPageAdapter;
 import com.dai.zero.main.Leftmain.LeftMainFragment;
 import com.dai.zero.main.main.MainFragment;
 import com.dai.zero.main.rightmain.RightMainFragment;
-import com.dai.zero.util.ActivityUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,19 +37,20 @@ public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
 
-    @BindView(R.id.fl_title_menu)
-    FrameLayout flTitleMenu;
+    @BindView(R.id.iv_title_menu)
+    ImageView ivTitleMenu;
+    @BindView(R.id.main_pager)
+    RadioButton rbHomePager;
+    @BindView(R.id.left_pager)
+    RadioButton rbMusicPager;
+    @BindView(R.id.right_pager)
+    RadioButton rbFriendPager;
     @BindView(R.id.rg_home_viewpager_contorl)
-    RadioGroup rgHomeViewpagerContorl;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    RadioGroup rgHomeViewpagerControl;
     @BindView(R.id.contentFrame)
     ViewPager contentFrame;
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
-
-//    @Inject
-//    Lazy<MainFragment> mainFragmentProvider;
 
     @Inject
     MainFragment mainFragment;
@@ -59,13 +59,16 @@ public class MainActivity extends BaseActivity {
     @Inject
     RightMainFragment rightMainFragment;
 
+//    @Inject
+//    Lazy<MainFragment> mainFragmentProvider;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mainFragment, R.id.contentFrame);
+//        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mainFragment, R.id.contentFrame);
 //        if (mainFragment == null) {
 //            // Get the fragment from dagger
 //            mainFragment = mainFragmentProvider.get();
@@ -88,13 +91,15 @@ public class MainActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        rgHomeViewpagerContorl.check(R.id.rb_home_pager);
+                        Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
+                        rgHomeViewpagerControl.check(R.id.main_pager);
                         break;
                     case 1:
-                        rgHomeViewpagerContorl.check(R.id.rb_music_pager);
+                        Log.d(TAG, "onPageSelected() returned: " + position);
+                        rgHomeViewpagerControl.check(R.id.left_pager);
                         break;
                     case 2:
-                        rgHomeViewpagerContorl.check(R.id.rb_friend_pager);
+                        rgHomeViewpagerControl.check(R.id.right_pager);
                         break;
                 }
             }
@@ -104,7 +109,6 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-
 
     }
 
@@ -140,39 +144,23 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @OnClick({R.id.fl_title_menu, R.id.rg_home_viewpager_contorl, R.id.toolbar, R.id.contentFrame, R.id.drawerLayout})
+
+    @OnClick({R.id.iv_title_menu, R.id.main_pager, R.id.left_pager, R.id.right_pager, R.id.textView})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.fl_title_menu:
-                System.out.println("MainActivity.onViewClicked fl_title_menu ");
+            case R.id.iv_title_menu:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
-            case R.id.rg_home_viewpager_contorl:
-                rgHomeViewpagerContorl.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-
-                        switch (i) {
-                            case R.id.rb_home_pager:
-                                contentFrame.setCurrentItem(0);// 设置当前页面
-//                        vpContent.setCurrentItem(0,false);// false去掉viewpager切换页面的动画
-                                break;
-                            case R.id.rb_music_pager:
-                                contentFrame.setCurrentItem(1);
-                                break;
-                            case R.id.rb_friend_pager:
-                                contentFrame.setCurrentItem(2);
-                                break;
-                        }
-                    }
-                });
+            case R.id.main_pager:
+                contentFrame.setCurrentItem(0);
                 break;
-            case R.id.toolbar:
+            case R.id.left_pager:
+                contentFrame.setCurrentItem(1);
                 break;
-            case R.id.contentFrame:
+            case R.id.right_pager:
+                contentFrame.setCurrentItem(2);
                 break;
-            case R.id.drawerLayout:
-
+            case R.id.textView:
                 break;
         }
     }

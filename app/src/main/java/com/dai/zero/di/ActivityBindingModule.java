@@ -1,9 +1,9 @@
 package com.dai.zero.di;
 
-import com.dai.zero.main.Leftmain.LeftMainFragment;
+import com.dai.zero.main.Leftmain.LeftMainModule;
 import com.dai.zero.main.MainActivity;
 import com.dai.zero.main.main.MainModule;
-import com.dai.zero.main.rightmain.RightMainFragment;
+import com.dai.zero.main.rightmain.RightMainModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -19,7 +19,7 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class ActivityBindingModule {
 
     @ActivityScoped
-    @ContributesAndroidInjector(modules = {LeftMainFragment.class, MainModule.class, RightMainFragment.class})
+    @ContributesAndroidInjector(modules = {LeftMainModule.class, MainModule.class, RightMainModule.class})
     abstract MainActivity mainActivity();
 
 }
