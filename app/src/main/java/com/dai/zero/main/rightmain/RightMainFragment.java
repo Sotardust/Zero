@@ -44,4 +44,9 @@ public class RightMainFragment extends BaseFragment implements RightMainContract
         super.onDestroy();
         mPresenter.dropView();
     }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
 }

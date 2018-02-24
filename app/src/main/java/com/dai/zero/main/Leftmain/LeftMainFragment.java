@@ -44,4 +44,9 @@ public class LeftMainFragment extends BaseFragment implements LeftMainContract.V
         super.onDestroy();
         mPresenter.dropView();
     }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
 }

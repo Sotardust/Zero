@@ -10,7 +10,7 @@ import com.dai.zero.BaseView;
 public interface LeftMainContract {
 
     interface View extends BaseView<Presenter> {
-
+        boolean isActive();
     }
 
     interface Presenter extends BasePresenter<View> {
