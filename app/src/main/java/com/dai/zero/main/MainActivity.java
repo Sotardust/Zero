@@ -15,7 +15,7 @@ import android.widget.RadioGroup;
 
 import com.dai.zero.BaseActivity;
 import com.dai.zero.R;
-import com.dai.zero.adapter.MainFragmentPageAdapter;
+import com.dai.zero.adapter.BaseFragmentPageAdapter;
 import com.dai.zero.main.Leftmain.LeftMainFragment;
 import com.dai.zero.main.main.MainFragment;
 import com.dai.zero.main.rightmain.RightMainFragment;
@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.module_activity_main);
         ButterKnife.bind(this);
 
 //        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mainFragment, R.id.contentFrame);
@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity {
         mFragmentList.add(leftMainFragment);
         mFragmentList.add(mainFragment);
         mFragmentList.add(rightMainFragment);
-        contentFrame.setAdapter(new MainFragmentPageAdapter(getSupportFragmentManager(), mFragmentList));
+        contentFrame.setAdapter(new BaseFragmentPageAdapter(getSupportFragmentManager(), mFragmentList));
         contentFrame.setCurrentItem(1);
         contentFrame.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

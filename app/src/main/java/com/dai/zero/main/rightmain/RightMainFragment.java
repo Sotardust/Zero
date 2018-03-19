@@ -29,7 +29,7 @@ public class RightMainFragment extends BaseFragment implements RightMainContract
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_rightmain, container, false);
+        View root = inflater.inflate(R.layout.module_fragment_rightmain, container, false);
         return root;
     }
 

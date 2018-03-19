@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:button="@null"
-                    android:drawableTop="@drawable/titlebar_disco" />
+                    android:drawableTop="@drawable/module_titlebar_disco" />
 
                 <RadioButton
                     android:id="@+id/left_pager"
@@ -58,14 +58,14 @@
                     android:layout_height="match_parent"
                     android:button="@null"
                     android:checked="true"
-                    android:drawableTop="@drawable/titlebar_music" />
+                    android:drawableTop="@drawable/module_titlebar_music" />
 
                 <RadioButton
                     android:id="@+id/right_pager"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:button="@null"
-                    android:drawableTop="@drawable/titlebar_friends" />
+                    android:drawableTop="@drawable/module_titlebar_friends" />
 
             </RadioGroup>
 

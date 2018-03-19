@@ -10,17 +10,17 @@ import java.util.List;
  * Created by Administrator on 2018/2/19.
  */
 
-public class MainFragmentPageAdapter extends FragmentPagerAdapter{
+public class BaseFragmentPageAdapter extends FragmentPagerAdapter{
 
     private List<Fragment> fragmentList;
-    private List<String> mTitleList;
+    private String[] mTitleList;
 
-    public MainFragmentPageAdapter(FragmentManager fm, List<Fragment> fragmentList) {
+    public BaseFragmentPageAdapter(FragmentManager fm, List<Fragment> fragmentList) {
         super(fm);
         this.fragmentList = fragmentList;
     }
 
-    public MainFragmentPageAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> mTitleList){
+    public BaseFragmentPageAdapter(FragmentManager fm, List<Fragment> fragmentList, String[] mTitleList){
         super(fm);
         this.fragmentList = fragmentList;
         this.mTitleList = mTitleList;
@@ -38,7 +38,7 @@ public class MainFragmentPageAdapter extends FragmentPagerAdapter{
     @Override
     public CharSequence getPageTitle(int position) {
         if (mTitleList != null) {
-            return mTitleList.get(position);
+            return mTitleList[position];
         } else {
             return "";
         }
