@@ -116,11 +116,13 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.d(TAG, "onPageScrolled() returned: " + position);
+//                Log.d(TAG, "onPageScrolled() returned: " + position);
             }
 
             @Override
             public void onPageSelected(int position) {
+
+                Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
 
             }
 

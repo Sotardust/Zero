@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="acg">
+        <item>@mipmap/acg_1</item>
+        <item>@mipmap/acg_2</item>
+        <item>@mipmap/acg_3</item>
+        <item>@mipmap/acg_4</item>
+        <item>@mipmap/acg_5</item>
+        <item>@mipmap/acg_6</item>
+        <item>@mipmap/acg_7</item>
+        <item>@mipmap/acg_8</item>
+    </array>
+</resources>
