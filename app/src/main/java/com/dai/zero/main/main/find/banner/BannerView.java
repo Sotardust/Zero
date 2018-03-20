@@ -73,34 +73,34 @@ public class BannerView extends RelativeLayout {
         this.onImageViewClickListener = onImageViewClickListener;
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return true;
-    }
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        return true;
+//    }
 
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Float x = 0f, y = 0f;
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                x = event.getX();
-                y = event.getY();
-                Log.d(TAG, "onTouch() returned: " + event.getX());
-                Log.d(TAG, "onTouch() returned: " + event.getY());
-                observable.unsubscribeOn(Schedulers.io());
-                break;
-            case MotionEvent.ACTION_UP:
-                System.out.println("(Math.abs(y - event.getY()) = " + (Math.abs(x - event.getX())));
-                Log.d(TAG, "onTouch() returned: " + event.getX());
-                if (Math.abs(x - event.getX()) < 50) {
-                    onImageViewClickListener.OnClick(currentIndex);
-                }
-                observable.subscribe();
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
+//    @SuppressLint("ClickableViewAccessibility")
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        Float x = 0f, y = 0f;
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                x = event.getX();
+//                y = event.getY();
+//                Log.d(TAG, "onTouch() returned: " + event.getX());
+//                Log.d(TAG, "onTouch() returned: " + event.getY());
+//                observable.unsubscribeOn(Schedulers.io());
+//                break;
+//            case MotionEvent.ACTION_UP:
+//                System.out.println("(Math.abs(y - event.getY()) = " + (Math.abs(x - event.getX())));
+//                Log.d(TAG, "onTouch() returned: " + event.getX());
+//                if (Math.abs(x - event.getX()) < 50) {
+//                    onImageViewClickListener.OnClick(currentIndex);
+//                }
+//                observable.subscribe();
+//                break;
+//        }
+//        return super.onTouchEvent(event);
+//    }
 
     //适配viewpager 设置自动轮播
 
