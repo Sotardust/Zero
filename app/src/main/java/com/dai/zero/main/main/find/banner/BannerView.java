@@ -82,16 +82,19 @@ public class BannerView extends RelativeLayout {
     public boolean onInterceptTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                Log.d(TAG, "onInterceptTouchEvent:  MotionEvent.ACTION_DOWN");
                 isMove = false;
                 unSubscribe();
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (!isMove) {
+                    Log.d(TAG, "onInterceptTouchEvent:  MotionEvent.ACTION_MOVE");
                     isMove = true;
                     subscribe();
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                Log.d(TAG, "onInterceptTouchEvent:  MotionEvent.ACTION_UP");
                 isMove = false;
                 onImageViewClickListener.OnClick(currentIndex);
                 subscribe();
@@ -111,7 +114,7 @@ public class BannerView extends RelativeLayout {
         viewPager.addOnPageChangeListener(new onPageChangerListener() {
             @Override
             public void onPageSelected(int position) {
-                loopIndex = position;
+//                loopIndex = position;
                 currentIndex = getCurrentIndex(position);
                 ll.removeAllViews();
                 for (int i = 0; i < imageViews.size(); i++) {
@@ -131,10 +134,10 @@ public class BannerView extends RelativeLayout {
             @Override
             public void onNext(Long o) {
                 super.onNext(o);
-                boolean flag = loopIndex != 0;
-                loopIndex = getCurrentIndex(loopIndex);
-                viewPager.setCurrentItem(loopIndex, flag);
-                loopIndex++;
+                boolean flag = currentIndex != 0;
+                viewPager.setCurrentItem(currentIndex, flag);
+//                loopIndex = getCurrentIndex(loopIndex);
+//                loopIndex++;
             }
 
             @Override
@@ -184,8 +187,9 @@ public class BannerView extends RelativeLayout {
 
     //获取取余获取viewpager当前坐标
     private int getCurrentIndex(int index) {
-        if (index > imageViews.size() - 1) {
-            index = index % imageViews.size();
+        index %= imageViews.size();
+        if (index < 0) {
+            index = imageViews.size() + index;
         }
         return index;
     }
@@ -211,7 +215,7 @@ public class BannerView extends RelativeLayout {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-
+            Log.d(TAG, "instantiateItem() returned: " + position);
             ImageView imageView = imageViews.get(getCurrentIndex(position));
             ViewParent vp = imageView.getParent();
             if (vp != null) {
