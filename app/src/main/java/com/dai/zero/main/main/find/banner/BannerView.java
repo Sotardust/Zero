@@ -1,6 +1,5 @@
 package com.dai.zero.main.main.find.banner;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -28,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -37,18 +37,21 @@ import io.reactivex.schedulers.Schedulers;
 public class BannerView extends RelativeLayout {
 
     private static final String TAG = "BannerView";
+    private static final int MAX_VALUE = 1000;
     //装载ImageView控件的list
     private List<ImageView> imageViews;
     //viewPager的当前页下标
     private int currentIndex = 0;
+    private int loopIndex = 0;
     private ViewPager viewPager;
     private LinearLayout ll;
     private Context context;
     private LinearLayout.LayoutParams lp;
     private Observable<Long> observable;
+    private ObserverListener<Long> observerListener;
+    private Disposable disposable;
     //默认自动轮播的时间间隔(s)
     private int intervalTime = 2;
-
 
     private OnImageViewClickListener onImageViewClickListener;
 
@@ -58,7 +61,7 @@ public class BannerView extends RelativeLayout {
 
     public BannerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init(context);
     }
 
     public void setImageViewList(List<ImageView> imageViews) {
@@ -73,37 +76,33 @@ public class BannerView extends RelativeLayout {
         this.onImageViewClickListener = onImageViewClickListener;
     }
 
-//    @Override
-//    public boolean onInterceptTouchEvent(MotionEvent ev) {
-//        return true;
-//    }
+    private boolean isMove = true;
 
-//    @SuppressLint("ClickableViewAccessibility")
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        Float x = 0f, y = 0f;
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN:
-//                x = event.getX();
-//                y = event.getY();
-//                Log.d(TAG, "onTouch() returned: " + event.getX());
-//                Log.d(TAG, "onTouch() returned: " + event.getY());
-//                observable.unsubscribeOn(Schedulers.io());
-//                break;
-//            case MotionEvent.ACTION_UP:
-//                System.out.println("(Math.abs(y - event.getY()) = " + (Math.abs(x - event.getX())));
-//                Log.d(TAG, "onTouch() returned: " + event.getX());
-//                if (Math.abs(x - event.getX()) < 50) {
-//                    onImageViewClickListener.OnClick(currentIndex);
-//                }
-//                observable.subscribe();
-//                break;
-//        }
-//        return super.onTouchEvent(event);
-//    }
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                isMove = false;
+                unSubscribe();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (!isMove) {
+                    isMove = true;
+                    subscribe();
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                isMove = false;
+                onImageViewClickListener.OnClick(currentIndex);
+                subscribe();
+                break;
+            default:
+                break;
+        }
+        return onTouchEvent(event);
+    }
 
-    //适配viewpager 设置自动轮播
-
+    //适配viewpager设置自动轮播
     public void start() {
         for (int i = 0; i < imageViews.size(); i++) {
             fillData(i, 0);
@@ -112,24 +111,30 @@ public class BannerView extends RelativeLayout {
         viewPager.addOnPageChangeListener(new onPageChangerListener() {
             @Override
             public void onPageSelected(int position) {
-                position = getCurrentIndex(position);
+                loopIndex = position;
+                currentIndex = getCurrentIndex(position);
                 ll.removeAllViews();
                 for (int i = 0; i < imageViews.size(); i++) {
-                    fillData(i, position);
+                    fillData(i, currentIndex);
                 }
             }
         });
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
-        observable = Observable.interval(intervalTime, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(new ObserverListener<Long>() {
+        observerListener = new ObserverListener<Long>() {
             @Override
-            public void onNext(Long aLong) {
-                super.onNext(aLong);
-                boolean flag = currentIndex != 0;
-                viewPager.setCurrentItem(currentIndex, flag);
+            public void onSubscribe(Disposable d) {
+                super.onSubscribe(d);
+                disposable = d;
+            }
+
+            @Override
+            public void onNext(Long o) {
+                super.onNext(o);
+                boolean flag = loopIndex != 0;
+                loopIndex = getCurrentIndex(loopIndex);
+                viewPager.setCurrentItem(loopIndex, flag);
+                loopIndex++;
             }
 
             @Override
@@ -137,17 +142,39 @@ public class BannerView extends RelativeLayout {
                 super.onError(e);
                 Log.e(TAG, "onError: ", e);
             }
-        });
-        observable.subscribe();
+        };
+        observable = Observable.interval(intervalTime, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        subscribe();
     }
 
-    //停止图片轮换取消订阅
-    public void stop() {
-        observable.unsubscribeOn(Schedulers.io());
+
+    //重新开始图片轮播
+    public void onResume() {
+        subscribe();
     }
+
+    //停止图片轮播取消订阅
+    public void stop() {
+        unSubscribe();
+    }
+
+    //订阅图片轮播事件
+    private void subscribe() {
+        observable.subscribe(observerListener);
+    }
+
+    //取消订阅图片轮播事件
+    private void unSubscribe() {
+        observable.unsubscribeOn(Schedulers.io());
+        if (disposable != null && !disposable.isDisposed())
+            disposable.dispose();
+    }
+
 
     //初始化视图
-    private void init(Context context, AttributeSet attrs) {
+    private void init(Context context) {
         this.context = context;
         lp = new LinearLayout.LayoutParams(ConvertUtil.dip2px(context, 8), ConvertUtil.dip2px(context, 8));
         LayoutInflater.from(context).inflate(R.layout.module_view_banner, this, true);
@@ -185,8 +212,7 @@ public class BannerView extends RelativeLayout {
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
 
-            currentIndex = getCurrentIndex(position);
-            ImageView imageView = imageViews.get(currentIndex);
+            ImageView imageView = imageViews.get(getCurrentIndex(position));
             ViewParent vp = imageView.getParent();
             if (vp != null) {
                 ViewGroup parent = (ViewGroup) vp;
@@ -198,12 +224,17 @@ public class BannerView extends RelativeLayout {
 
         @Override
         public int getCount() {
-            return imageViews.size() * 100;
+            return imageViews.size() * MAX_VALUE;
         }
 
         @Override
         public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view == object;
+        }
+
+        @Override
+        public float getPageWidth(int position) {
+            return super.getPageWidth(position);
         }
     }
 

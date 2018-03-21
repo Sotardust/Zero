@@ -46,8 +46,8 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.module_fragment_find, container, false);
         unbinder = ButterKnife.bind(this, view);
-        List<ImageView> imageViews = new ArrayList<>();
 
+        List<ImageView> imageViews = new ArrayList<>();
 
         ImageView imageView1 = new ImageView(getContext());
         ImageView imageView2 = new ImageView(getContext());
@@ -57,7 +57,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         ImageView imageView6 = new ImageView(getContext());
         ImageView imageView7 = new ImageView(getContext());
         ImageView imageView8 = new ImageView(getContext());
-//        .override(100, 50)
+
         imageViews.add(GlideApp.with(this).load(R.mipmap.acg_1).into(imageView1).getView());
         imageViews.add(GlideApp.with(this).load(R.mipmap.acg_2).into(imageView2).getView());
         imageViews.add(GlideApp.with(this).load(R.mipmap.acg_3).into(imageView3).getView());
@@ -67,11 +67,11 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         imageViews.add(GlideApp.with(this).load(R.mipmap.acg_7).into(imageView7).getView());
         imageViews.add(GlideApp.with(this).load(R.mipmap.acg_8).into(imageView8).getView());
         bannerView.setImageViewList(imageViews);
+        bannerView.start();
         bannerView.setOnImageViewClickListener(new BannerView.OnImageViewClickListener() {
             @Override
             public void OnClick(int position) {
                 Log.d(TAG, "OnClick() called with: position = [" + position + "]");
-
             }
         });
         return view;
@@ -80,7 +80,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     @Override
     public void onResume() {
         super.onResume();
-        bannerView.start();
+        bannerView.onResume();
     }
 
     @Override
