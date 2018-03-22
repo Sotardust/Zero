@@ -1,14 +1,14 @@
 package com.dai.zero.util.inter;
 
 
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
  * Created by dai on 2018/3/20.
  */
 
-public class ObserverListener<T> implements Observer<T> {
+public class ObserverListener<T> implements io.reactivex.Observer<T> {
+
     @Override
     public void onSubscribe(Disposable d) {
 

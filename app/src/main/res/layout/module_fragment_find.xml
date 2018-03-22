@@ -7,6 +7,9 @@
     <com.dai.zero.main.main.find.banner.BannerView
         android:id="@+id/banner_view"
         android:layout_width="match_parent"
-        android:layout_height="150dp" />
+        android:layout_height="120dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

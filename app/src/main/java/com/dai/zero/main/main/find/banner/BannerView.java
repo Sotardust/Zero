@@ -38,11 +38,16 @@ public class BannerView extends RelativeLayout {
 
     private static final String TAG = "BannerView";
     private static final int MAX_VALUE = 1000;
+
+    //默认自动轮播的时间间隔(s)
+    private int intervalTime = 2;
+    //用于判断左右滑动
+    private boolean isMove = true;
     //装载ImageView控件的list
     private List<ImageView> imageViews;
-    //viewPager的当前页下标
-    private int currentIndex = 0;
-    private int loopIndex = 0;
+    //viewPager的循环页下标初始值设置为1000
+    private int loopIndex = 1000;
+
     private ViewPager viewPager;
     private LinearLayout ll;
     private Context context;
@@ -50,10 +55,8 @@ public class BannerView extends RelativeLayout {
     private Observable<Long> observable;
     private ObserverListener<Long> observerListener;
     private Disposable disposable;
-    //默认自动轮播的时间间隔(s)
-    private int intervalTime = 2;
 
-    private OnImageViewClickListener onImageViewClickListener;
+    private OnBannerViewClickListener onBannerViewClickListener;
 
     public BannerView(Context context) {
         super(context);
@@ -72,31 +75,28 @@ public class BannerView extends RelativeLayout {
         this.intervalTime = intervalTime;
     }
 
-    public void setOnImageViewClickListener(OnImageViewClickListener onImageViewClickListener) {
-        this.onImageViewClickListener = onImageViewClickListener;
+    public void setOnBannerViewClickListener(OnBannerViewClickListener onBannerViewClickListener) {
+        this.onBannerViewClickListener = onBannerViewClickListener;
     }
 
-    private boolean isMove = true;
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Log.d(TAG, "onInterceptTouchEvent:  MotionEvent.ACTION_DOWN");
                 isMove = false;
                 unSubscribe();
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (!isMove) {
-                    Log.d(TAG, "onInterceptTouchEvent:  MotionEvent.ACTION_MOVE");
                     isMove = true;
                     subscribe();
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                Log.d(TAG, "onInterceptTouchEvent:  MotionEvent.ACTION_UP");
                 isMove = false;
-                onImageViewClickListener.OnClick(currentIndex);
+                //对bannerView点击事件进行监听
+                onBannerViewClickListener.OnItemClick(getCurrentIndex(loopIndex));
                 subscribe();
                 break;
             default:
@@ -114,30 +114,41 @@ public class BannerView extends RelativeLayout {
         viewPager.addOnPageChangeListener(new onPageChangerListener() {
             @Override
             public void onPageSelected(int position) {
-//                loopIndex = position;
-                currentIndex = getCurrentIndex(position);
+                //手动滑动时对ViewPager循环索引赋值
+                loopIndex = position;
                 ll.removeAllViews();
                 for (int i = 0; i < imageViews.size(); i++) {
-                    fillData(i, currentIndex);
+                    fillData(i, getCurrentIndex(position));
                 }
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
             }
         });
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setCurrentItem(1000);
         observerListener = new ObserverListener<Long>() {
             @Override
             public void onSubscribe(Disposable d) {
                 super.onSubscribe(d);
+
+                //用于设置取消订阅
                 disposable = d;
             }
 
             @Override
             public void onNext(Long o) {
                 super.onNext(o);
-                boolean flag = currentIndex != 0;
-                viewPager.setCurrentItem(currentIndex, flag);
-//                loopIndex = getCurrentIndex(loopIndex);
-//                loopIndex++;
+                loopIndex++;
+                viewPager.setCurrentItem(loopIndex);
             }
 
             @Override
@@ -149,9 +160,8 @@ public class BannerView extends RelativeLayout {
         observable = Observable.interval(intervalTime, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        subscribe();
-    }
 
+    }
 
     //重新开始图片轮播
     public void onResume() {
@@ -185,11 +195,10 @@ public class BannerView extends RelativeLayout {
         ll = (LinearLayout) findViewById(R.id.dot_banner);
     }
 
-    //获取取余获取viewpager当前坐标
+    //通过取余获取viewpager当前坐标
     private int getCurrentIndex(int index) {
-        index %= imageViews.size();
-        if (index < 0) {
-            index = imageViews.size() + index;
+        if (index > imageViews.size() - 1) {
+            index = index % imageViews.size();
         }
         return index;
     }
@@ -201,7 +210,6 @@ public class BannerView extends RelativeLayout {
         dotView.setLayoutParams(lp);
         @DrawableRes int resId = index == position ? R.mipmap.banner_red : R.mipmap.banner_grey;
         ll.addView(GlideApp.with(context).load(resId).into(dotView).getView());
-
     }
 
 
@@ -215,7 +223,6 @@ public class BannerView extends RelativeLayout {
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            Log.d(TAG, "instantiateItem() returned: " + position);
             ImageView imageView = imageViews.get(getCurrentIndex(position));
             ViewParent vp = imageView.getParent();
             if (vp != null) {
@@ -235,15 +242,10 @@ public class BannerView extends RelativeLayout {
         public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view == object;
         }
-
-        @Override
-        public float getPageWidth(int position) {
-            return super.getPageWidth(position);
-        }
     }
 
-    public interface OnImageViewClickListener {
-        void OnClick(int position);
+    public interface OnBannerViewClickListener {
+        void OnItemClick(int position);
     }
 
 }

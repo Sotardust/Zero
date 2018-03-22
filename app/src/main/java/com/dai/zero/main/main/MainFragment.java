@@ -45,7 +45,7 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
     ViewPager viewPager;
     Unbinder unbinder;
 
-    private String[] titles = {"发现", "我的", "电台"};
+    private String[] titles = {"发现", "我的", "电台", "我的", "电台", "我的"};
 
     @Inject
     FindFragment findFragment;
@@ -106,6 +106,7 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
         mFragmentList.add(findFragment);
         mFragmentList.add(mineFragment);
         mFragmentList.add(transceiverFragment);
+
 
 //        BaseFragmentPageAdapter adapter = new BaseFragmentPageAdapter(getChildFragmentManager(),mFragmentList);
 

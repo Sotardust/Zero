@@ -2,7 +2,6 @@ package com.dai.zero.main.main.find;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,10 +67,10 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         imageViews.add(GlideApp.with(this).load(R.mipmap.acg_8).into(imageView8).getView());
         bannerView.setImageViewList(imageViews);
         bannerView.start();
-        bannerView.setOnImageViewClickListener(new BannerView.OnImageViewClickListener() {
+        bannerView.setOnBannerViewClickListener(new BannerView.OnBannerViewClickListener() {
             @Override
-            public void OnClick(int position) {
-                Log.d(TAG, "OnClick() called with: position = [" + position + "]");
+            public void OnItemClick(int position) {
+
             }
         });
         return view;
@@ -88,6 +87,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         super.onPause();
         bannerView.stop();
     }
+
 
     @Override
     public void onDestroyView() {
