@@ -48,23 +48,14 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
         List<ImageView> imageViews = new ArrayList<>();
 
-        ImageView imageView1 = new ImageView(getContext());
-        ImageView imageView2 = new ImageView(getContext());
-        ImageView imageView3 = new ImageView(getContext());
-        ImageView imageView4 = new ImageView(getContext());
-        ImageView imageView5 = new ImageView(getContext());
-        ImageView imageView6 = new ImageView(getContext());
-        ImageView imageView7 = new ImageView(getContext());
-        ImageView imageView8 = new ImageView(getContext());
-
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_1).into(imageView1).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_2).into(imageView2).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_3).into(imageView3).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_4).into(imageView4).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_5).into(imageView5).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_6).into(imageView6).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_7).into(imageView7).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_8).into(imageView8).getView());
+        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_1).into(new ImageView(getContext())).getView());
+        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_2).into(new ImageView(getContext())).getView());
+        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_3).into(new ImageView(getContext())).getView());
+        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_4).into(new ImageView(getContext())).getView());
+        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_5).into(new ImageView(getContext())).getView());
+        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_6).into(new ImageView(getContext())).getView());
+        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_7).into(new ImageView(getContext())).getView());
+        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_8).into(new ImageView(getContext())).getView());
         bannerView.setImageViewList(imageViews);
         bannerView.start();
         bannerView.setOnBannerViewClickListener(new BannerView.OnBannerViewClickListener() {
