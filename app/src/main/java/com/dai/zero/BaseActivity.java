@@ -13,7 +13,7 @@ import dagger.android.support.DaggerAppCompatActivity;
  * Created by dai on 2018/2/13.
  */
 
-public abstract class BaseActivity extends DaggerAppCompatActivity {
+public  class BaseActivity extends DaggerAppCompatActivity {
 
     // 管理运行的所有的activity
     public final static List<AppCompatActivity> mActivities = new LinkedList<AppCompatActivity>();

@@ -1,4 +1,4 @@
-package com.dai.zero.main.Leftmain;
+package com.dai.zero.main.leftmain;
 
 import com.dai.zero.BasePresenter;
 import com.dai.zero.BaseView;

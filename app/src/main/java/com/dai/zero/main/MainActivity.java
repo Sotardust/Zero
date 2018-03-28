@@ -16,7 +16,7 @@ import android.widget.RadioGroup;
 import com.dai.zero.BaseActivity;
 import com.dai.zero.R;
 import com.dai.zero.adapter.BaseFragmentPageAdapter;
-import com.dai.zero.main.Leftmain.LeftMainFragment;
+import com.dai.zero.main.leftmain.LeftMainFragment;
 import com.dai.zero.main.main.MainFragment;
 import com.dai.zero.main.rightmain.RightMainFragment;
 
