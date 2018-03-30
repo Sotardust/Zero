@@ -79,7 +79,6 @@ public class BannerView extends RelativeLayout {
         this.onBannerViewClickListener = onBannerViewClickListener;
     }
 
-
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -129,7 +128,6 @@ public class BannerView extends RelativeLayout {
             @Override
             public void onSubscribe(Disposable d) {
                 super.onSubscribe(d);
-
                 //用于设置取消订阅
                 disposable = d;
             }
@@ -170,7 +168,6 @@ public class BannerView extends RelativeLayout {
 
     //取消订阅图片轮播事件
     private void unSubscribe() {
-        observable.unsubscribeOn(Schedulers.io());
         if (disposable != null && !disposable.isDisposed())
             disposable.dispose();
     }

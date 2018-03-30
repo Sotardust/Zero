@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="horizontal">
+
+    <Button
+        style="@style/recommend_btn_style"
+        android:drawableTop="@drawable/module_find_private_fm"
+        android:text="私人FM" />
+
+    <Button
+        style="@style/recommend_btn_style"
+        android:drawableTop="@drawable/module_find_daily_recommendation"
+        android:text="每日推荐" />
+
+    <Button
+        style="@style/recommend_btn_style"
+        android:drawableTop="@drawable/module_find_song_sheet"
+        android:text="歌单" />
+
+    <Button
+        style="@style/recommend_btn_style"
+        android:drawableTop="@drawable/module_find_ranking_list"
+        android:text="排行榜" />
+
+
+</LinearLayout>

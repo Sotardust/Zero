@@ -1,6 +1,6 @@
 package com.dai.zero.di;
 
-import com.dai.zero.main.Leftmain.LeftMainModule;
+import com.dai.zero.main.leftmain.LeftMainModule;
 import com.dai.zero.main.MainActivity;
 import com.dai.zero.main.main.MainModule;
 import com.dai.zero.main.main.find.FindModule;
