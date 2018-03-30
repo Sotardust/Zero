@@ -88,7 +88,6 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         bannerView.stop();
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
