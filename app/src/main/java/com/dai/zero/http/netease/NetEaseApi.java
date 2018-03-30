@@ -56,6 +56,7 @@ public class NetEaseApi {
     }
 
     //搜索音乐
+    //http://music.163.com/weapi/search/suggest/multimatch?csrf_token=
     public static AddParam SearchMusic(String s) {
         AddParam upp = new AddParam();
         upp.addPara("s", s);
@@ -64,6 +65,7 @@ public class NetEaseApi {
         return upp;
     }
 
+    //http://music.163.com/weapi/search/suggest/web?csrf_token=
     public static AddParam SearchGeShou(String s) {
         AddParam upp = new AddParam();
         upp.addPara("s", s);

@@ -1,8 +1,7 @@
 package com.dai.zero.http.netease;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 public class AddParam {
     public String url;
@@ -29,11 +28,7 @@ public class AddParam {
     }
 
     public AddParam addPara(String key, Object value) {
-        try {
-            this.paras.put(key, value.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        this.paras.put(key, value.toString());
         return this;
     }
 
