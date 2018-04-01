@@ -69,14 +69,12 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
         List<ImageView> imageViews = new ArrayList<>();
 
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_1).into(new ImageView(getContext())).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_2).into(new ImageView(getContext())).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_3).into(new ImageView(getContext())).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_4).into(new ImageView(getContext())).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_5).into(new ImageView(getContext())).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_6).into(new ImageView(getContext())).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_7).into(new ImageView(getContext())).getView());
-        imageViews.add(GlideApp.with(this).load(R.mipmap.acg_8).into(new ImageView(getContext())).getView());
+        String[] urls = getResources().getStringArray(R.array.module_url_banner_picture);
+
+        for (String url : urls) {
+            ImageView imageView = new ImageView(getContext());
+            imageViews.add(GlideApp.with(this).load(url).centerCrop().into(imageView).getView());
+        }
         bannerView.setImageViewList(imageViews);
         bannerView.start();
         bannerView.setOnBannerViewClickListener(new BannerView.OnBannerViewClickListener() {
@@ -91,8 +89,12 @@ public class FindFragment extends BaseFragment implements FindContract.View {
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
                 AddParam upp = NetEaseApi.SearchGeShou("红昭愿");
 //            UrlParamPair upp = Api.SearchMusic("红昭愿");
-                String param = upp.getParas().toJSONString();
+//                String param = upp.getParas().toJSONString();
+//                String param = "{\"logs\":\"[{\\\"action\\\":\\\"bannerimpress\\\",\\\"json\\\":{\\\"type\\\":\\\"1_歌曲\\\",\\\"url\\\":\\\"/song?id=548556869\\\",\\\"id\\\":\\\"548556869\\\",\\\"position\\\":2}}]\",\"csrf_token\":\"\"}";
+//                String param = "{\"csrf_token\":\"\"}";
+                String param = "{\"ids\":\"[426027293]\",\"br\":128000,\"csrf_token\":\"\"}";
                 System.out.println("param:" + param);
+//                String url = "http://39.106.220.113:8080/mobile/params";
                 String url = "http://39.106.220.113:8080/mobile/params";
                 OkHttpClient okHttpClient = new OkHttpClient();
                 RequestBody requestBody = new FormBody.Builder()
@@ -136,14 +138,17 @@ public class FindFragment extends BaseFragment implements FindContract.View {
                     hashMap.put("params", jsonObject.getString("params"));
                     hashMap.put("encSecKey", jsonObject.getString("encSecKey"));
                     Connection.Response
-                            response = Jsoup.connect("http://music.163.com/weapi/search/suggest/web?csrf_token=")
+//                            response = Jsoup.connect("http://music.163.com/weapi/search/suggest/web?csrf_token=")
+//                            response = Jsoup.connect("http://music.163.com/weapi/feedback/weblog?csrf_token=")
+//                            response = Jsoup.connect("http://music.163.com/#/playlist?id=2160550186")
+                            response = Jsoup.connect("http://music.163.com/weapi/song/enhance/player/url?csrf_token=")
                             .data(hashMap)
                             .method(Connection.Method.POST)
                             .ignoreContentType(true)
                             .timeout(10000)
                             .execute();
                     String list = response.body();
-                    System.out.println(list);
+//                    System.out.println(list);
                     emitter.onNext(list);
                 } catch (Exception e) {
                     e.printStackTrace();

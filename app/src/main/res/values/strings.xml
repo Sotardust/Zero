@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Zero</string>
 
+    <string-array name="module_url_banner_picture">
+        <item>http://p1.music.126.net/2d_gTxI1zsWa0wmNz3DSNw==/109951163213468979.jpg</item>
+        <item>http://p1.music.126.net/b_wbBiONd84N-SwqkVjH3w==/109951163213081224.jpg</item>
+        <item>http://p1.music.126.net/oH2YsSkCuKzd1tOkwU0QlQ==/109951163213906153.jpg</item>
+        <item>http://p1.music.126.net/WreU_oT7wNngzjEpTH1_NA==/109951163213996966.jpg</item>
+        <item>http://p1.music.126.net/dXtEnk3UKCRiemmsz9dC9w==/109951163214267923.jpg</item>
+        <item>http://p1.music.126.net/hCzuP6QOvWc6T3irijp3zw==/109951163213915707.jpg</item>
+        <item>http://p1.music.126.net/KHbdnVVMCLCzZYGNGztRUQ==/109951163213659864.jpg</item>
+    </string-array>
 
 </resources>

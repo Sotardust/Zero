@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import com.dai.zero.R;
 import com.dai.zero.di.GlideApp;
 import com.dai.zero.main.util.ConvertUtil;
+import com.dai.zero.main.util.ScreenUtil;
 import com.dai.zero.util.inter.ObserverListener;
 import com.dai.zero.util.inter.onPageChangerListener;
 
@@ -40,7 +41,7 @@ public class BannerView extends RelativeLayout {
     private static final int MAX_VALUE = 1000;
 
     //默认自动轮播的时间间隔(s)
-    private int intervalTime = 2;
+    private int intervalTime = 5;
     //用于判断左右滑动
     private boolean isMove = true;
     //装载ImageView控件的list
@@ -176,10 +177,14 @@ public class BannerView extends RelativeLayout {
     //初始化视图
     private void init(Context context) {
         this.context = context;
-        lp = new LinearLayout.LayoutParams(ConvertUtil.dip2px(context, 8), ConvertUtil.dip2px(context, 8));
+        ScreenUtil screenUtil = new ScreenUtil(context);
+        lp = new LinearLayout.LayoutParams(ConvertUtil.dip2px(context, 8), ConvertUtil.dip2px(context, 8), 1);
         LayoutInflater.from(context).inflate(R.layout.module_view_banner, this, true);
         viewPager = (ViewPager) findViewById(R.id.vp_banner);
         ll = (LinearLayout) findViewById(R.id.dot_banner);
+        //控制相邻两个点之间的距离
+        ll.setPadding(screenUtil.getWidth() / 3, 0, screenUtil.getWidth() / 3, 0);
+
     }
 
     //通过取余获取viewpager当前坐标

@@ -68,8 +68,8 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glideVersion"
 
     //执行JavaScript方法
-    implementation 'io.apisense:rhino-android:1.0'
-    implementation files('libs/nashorn.jar')
+//    implementation 'io.apisense:rhino-android:1.0'
+//    implementation files('libs/nashorn.jar')
     implementation files('libs/fastjson-1.2.32.jar')
     implementation files('libs/jsoup-1.10.3.jar')
 }
