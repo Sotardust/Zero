@@ -66,8 +66,7 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.module_fragment_main, container, false);
         unbinder = ButterKnife.bind(this, root);
-        init();
-
+        bindViews();
         return root;
     }
 
@@ -96,7 +95,7 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
 
 
     @Override
-    public void init() {
+    public void bindViews() {
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
 //        recyclerView.setLayoutManager(layoutManager);
 //        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);

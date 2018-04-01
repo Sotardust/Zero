@@ -13,7 +13,7 @@ public interface MainContract {
     interface View extends BaseView<Presenter> {
         boolean isActive();
 
-        void init();
+        void bindViews();
 
         void setAdapter(MainAdapter adapter);
 
@@ -21,6 +21,7 @@ public interface MainContract {
     }
 
     interface Presenter extends BasePresenter<View> {
+
         void setData();
 
         void onRefresh();

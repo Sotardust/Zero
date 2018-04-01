@@ -8,9 +8,13 @@ import com.dai.zero.BaseView;
  */
 
 public interface FindContract {
-    interface View extends BaseView< Presenter > {
+    interface View extends BaseView<Presenter> {
+        void bindViews();
     }
 
-    interface Presenter extends BasePresenter< View > {
+    interface Presenter extends BasePresenter<View> {
+        void getNeteaseData();
+
+        void initData();
     }
 }
