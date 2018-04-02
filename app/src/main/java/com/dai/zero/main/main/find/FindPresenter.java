@@ -5,7 +5,7 @@ import android.util.Log;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.http.okhttp.OkHttpUtil;
 import com.dai.zero.main.util.ParamAnalysisUtil;
-import com.dai.zero.util.inter.ObserverListener;
+import com.dai.zero.util.inter.ObserverCallback;
 
 import java.util.HashMap;
 
@@ -43,12 +43,12 @@ public class FindPresenter implements FindContract.Presenter {
         final HashMap<String, String> param = new HashMap<>();
         param.put("param", params);
 
-        OkHttpUtil.postRequest(url, param, new ObserverListener<String>() {
+        OkHttpUtil.postRequest(url, param, new ObserverCallback<String>() {
             @Override
             public void onNext(final String s) {
                 super.onNext(s);
                 String url = "http://music.163.com/weapi/song/enhance/player/url?csrf_token=";
-                OkHttpUtil.postRequest(url, ParamAnalysisUtil.stringToHashMap(s), new ObserverListener<String>() {
+                OkHttpUtil.postRequest(url, ParamAnalysisUtil.stringToHashMap(s), new ObserverCallback<String>() {
                     @Override
                     public void onNext(String s) {
                         super.onNext(s);

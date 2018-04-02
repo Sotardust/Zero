@@ -11,4 +11,9 @@
         <item>http://p1.music.126.net/KHbdnVVMCLCzZYGNGztRUQ==/109951163213659864.jpg</item>
     </string-array>
 
+    <!--Find页面相关字符串-->
+    <string name="module_private_fm">私人FM</string>
+    <string name="module_daily_recommendation">每日推荐</string>
+    <string name="module_song_sheet">歌单</string>
+    <string name="module_ranking_list">排行榜</string>
 </resources>

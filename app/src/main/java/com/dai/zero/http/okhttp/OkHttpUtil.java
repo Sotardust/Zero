@@ -1,7 +1,7 @@
 package com.dai.zero.http.okhttp;
 
-import com.dai.zero.util.inter.ObservableOnSubscribeListener;
-import com.dai.zero.util.inter.ObserverListener;
+import com.dai.zero.util.inter.ObservableCallback;
+import com.dai.zero.util.inter.ObserverCallback;
 
 import java.util.HashMap;
 
@@ -22,37 +22,37 @@ import okhttp3.Response;
 public class OkHttpUtil {
 
     //无参数请求数据
-    public static void getRequest(final String url, ObserverListener<String> observerListener) {
-        executeSubscribe(getObservable(url), observerListener);
+    public static void getRequest(final String url, ObserverCallback<String> observerCallback) {
+        executeSubscribe(getObservable(url), observerCallback);
     }
 
     //自定义get请求数据
-    public static void getRequest(ObservableOnSubscribeListener<String> listener, ObserverListener<String> observerListener) {
-        executeSubscribe(getObservable(listener), observerListener);
+    public static void getRequest(ObservableCallback<String> observableCallback, ObserverCallback<String> observerCallback) {
+        executeSubscribe(getObservable(observableCallback), observerCallback);
     }
 
     //有参数请求数据
-    public static void postRequest(final String url, final HashMap<String, String> param, ObserverListener<String> observerListener) {
-        executeSubscribe(getObservable(url, param), observerListener);
+    public static void postRequest(final String url, final HashMap<String, String> param, ObserverCallback<String> observerCallback) {
+        executeSubscribe(getObservable(url, param), observerCallback);
     }
 
     //自定义post请求数据
-    public static void postRequest(ObservableOnSubscribeListener<String> listener, ObserverListener<String> observerListener) {
-        executeSubscribe(getObservable(listener), observerListener);
+    public static void postRequest(ObservableCallback<String> observableCallback, ObserverCallback<String> observerCallback) {
+        executeSubscribe(getObservable(observableCallback), observerCallback);
     }
 
-    private static void executeSubscribe(Observable<String> observable, ObserverListener<String> observerListener) {
+    private static void executeSubscribe(Observable<String> observable, ObserverCallback<String> observerCallback) {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observerListener);
+                .subscribe(observerCallback);
     }
 
-    private static Observable<String> getObservable(ObservableOnSubscribeListener<String> listener) {
-        return Observable.create(listener);
+    private static Observable<String> getObservable(ObservableCallback<String> observableCallback) {
+        return Observable.create(observableCallback);
     }
 
     private static Observable<String> getObservable(final String url) {
-        return Observable.create(new ObservableOnSubscribeListener<String>() {
+        return Observable.create(new ObservableCallback<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
                 super.subscribe(emitter);
@@ -63,7 +63,7 @@ public class OkHttpUtil {
     }
 
     private static Observable<String> getObservable(final String url, final HashMap<String, String> param) {
-        return Observable.create(new ObservableOnSubscribeListener<String>() {
+        return Observable.create(new ObservableCallback<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
                 super.subscribe(emitter);

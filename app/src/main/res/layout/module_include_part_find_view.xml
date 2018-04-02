@@ -5,25 +5,51 @@
     android:background="@color/colorWhite"
     android:orientation="horizontal">
 
-    <Button
-        style="@style/recommend_btn_style"
-        android:drawableTop="@drawable/module_find_private_fm"
-        android:text="私人FM" />
+    <LinearLayout style="@style/module_style_ll">
 
-    <Button
-        style="@style/recommend_btn_style"
-        android:drawableTop="@drawable/module_find_daily_recommendation"
-        android:text="每日推荐" />
+        <Button
+            style="@style/module_style_btn"
+            android:background="@drawable/module_find_private_fm" />
 
-    <Button
-        style="@style/recommend_btn_style"
-        android:drawableTop="@drawable/module_find_song_sheet"
-        android:text="歌单" />
+        <TextView
+            style="@style/module_style_text"
+            android:text="@string/module_private_fm" />
 
-    <Button
-        style="@style/recommend_btn_style"
-        android:drawableTop="@drawable/module_find_ranking_list"
-        android:text="排行榜" />
+    </LinearLayout>
 
+    <LinearLayout style="@style/module_style_ll">
 
+        <Button
+            style="@style/module_style_btn"
+            android:background="@drawable/module_find_daily_recommendation" />
+
+        <TextView
+            style="@style/module_style_text"
+            android:text="@string/module_daily_recommendation" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/module_style_ll">
+
+        <Button
+            style="@style/module_style_btn"
+            android:background="@drawable/module_find_song_sheet" />
+
+        <TextView
+            style="@style/module_style_text"
+            android:text="@string/module_song_sheet" />
+
+    </LinearLayout>
+
+    <LinearLayout style="@style/module_style_ll">
+
+        <Button
+            style="@style/module_style_btn"
+            android:background="@drawable/module_find_ranking_list" />
+
+        <TextView
+            style="@style/module_style_text"
+            android:text="@string/module_ranking_list" />
+
+    </LinearLayout>
 </LinearLayout>

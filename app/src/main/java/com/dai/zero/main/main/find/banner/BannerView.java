@@ -20,7 +20,7 @@ import com.dai.zero.R;
 import com.dai.zero.di.GlideApp;
 import com.dai.zero.main.util.ConvertUtil;
 import com.dai.zero.main.util.ScreenUtil;
-import com.dai.zero.util.inter.ObserverListener;
+import com.dai.zero.util.inter.ObserverCallback;
 import com.dai.zero.util.inter.onPageChangerListener;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class BannerView extends RelativeLayout {
     private Context context;
     private LinearLayout.LayoutParams lp;
     private Observable<Long> observable;
-    private ObserverListener<Long> observerListener;
+    private ObserverCallback<Long> observerListener;
     private Disposable disposable;
 
     private OnBannerViewClickListener onBannerViewClickListener;
@@ -125,7 +125,7 @@ public class BannerView extends RelativeLayout {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setCurrentItem(1000);
-        observerListener = new ObserverListener<Long>() {
+        observerListener = new ObserverCallback<Long>() {
             @Override
             public void onSubscribe(Disposable d) {
                 super.onSubscribe(d);

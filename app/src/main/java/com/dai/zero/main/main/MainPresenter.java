@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
+import com.dai.zero.adapter.BaseAdapter;
 import com.dai.zero.adapter.MainAdapter;
 import com.dai.zero.di.ActivityScoped;
 
@@ -53,9 +54,14 @@ public class MainPresenter implements MainContract.Presenter {
             list.add("当前时第" + i + "item");
         }
         assert mMainView != null;
-        adapter.setList(list);
+        adapter.setData(list);
         mMainView.setAdapter(adapter);
+        adapter.setOnItemClickLister(new BaseAdapter.OnItemClickLister<String>() {
+            @Override
+            public void onItemClick(int position, String data) {
 
+            }
+        });
     }
 
     private int count = 0;
@@ -73,8 +79,7 @@ public class MainPresenter implements MainContract.Presenter {
                 list.add("当前时第" + (20 + count++) + "item");
                 list.add("当前时第" + (20 + count++) + "item");
 
-                adapter.setList(list);
-                adapter.notifyDataSetChanged();
+                adapter.setData(list);
                 emitter.onNext("onRefresh");
             }
         }).subscribeOn(Schedulers.io())
