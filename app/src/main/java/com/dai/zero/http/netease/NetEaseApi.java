@@ -9,14 +9,14 @@ public class NetEaseApi {
      * @param uid
      * @return
      */
-    public static AddParam getPlaylistOfUser(String uid) {
-        AddParam upp = new AddParam();
-        upp.setUrl(BaseURL + "weapi/user/playlist?csrf_token=");
-        upp.addPara("offset", 0);
-        upp.addPara("uid", uid);
-        upp.addPara("limit", 20);
-        upp.addPara("csrf_token", "nothing");
-        return upp;
+    public static FillParam getPlaylistOfUser(String uid) {
+        FillParam fp = new FillParam();
+//        fp.setUrl(BaseURL + "weapi/user/playlist?csrf_token=");
+        fp.addParam("offset", 0);
+        fp.addParam("uid", uid);
+        fp.addParam("limit", 20);
+        fp.addParam("csrf_token", "nothing");
+        return fp;
     }
 
     /**
@@ -25,16 +25,16 @@ public class NetEaseApi {
      * @param playlist_id
      * @return
      */
-    public static AddParam getDetailOfPlaylist(String playlist_id) {
-        AddParam upp = new AddParam();
-        //upp.setUrl(BaseURL + "weapi/v3/playlist/detail?csrf_token=");
-        upp.addPara("id", playlist_id);
-        upp.addPara("offset", 0);
-        upp.addPara("total", "True");
-        upp.addPara("limit", 100);
-        upp.addPara("n", 1000);
-        upp.addPara("csrf_token", "nothing");
-        return upp;
+    public static FillParam getDetailOfPlaylist(String playlist_id) {
+        FillParam fp = new FillParam();
+        //fp.setUrl(BaseURL + "weapi/v3/playlist/detail?csrf_token=");
+        fp.addParam("id", playlist_id);
+        fp.addParam("offset", 0);
+        fp.addParam("total", "True");
+        fp.addParam("limit", 100);
+        fp.addParam("n", 1000);
+        fp.addParam("csrf_token", "nothing");
+        return fp;
     }
 
     /**
@@ -43,38 +43,38 @@ public class NetEaseApi {
      * @param s;
      * @return
      */
-    public static AddParam SearchMusicList(String s, String type) {
-        AddParam upp = new AddParam();
-        upp.addPara("s", s);
-        upp.addPara("type", type);
-        upp.addPara("offset", 0);
-        upp.addPara("total", "True");
-        upp.addPara("limit", 20);
-        upp.addPara("n", 1000);
-        upp.addPara("csrf_token", "nothing");
-        return upp;
+    public static FillParam SearchMusicList(String s, String type) {
+        FillParam fp = new FillParam();
+        fp.addParam("s", s);
+        fp.addParam("type", type);
+        fp.addParam("offset", 0);
+        fp.addParam("total", "True");
+        fp.addParam("limit", 20);
+        fp.addParam("n", 1000);
+        fp.addParam("csrf_token", "nothing");
+        return fp;
     }
 
     //搜索音乐
     //http://music.163.com/weapi/search/suggest/multimatch?csrf_token=
-    public static AddParam SearchMusic(String s) {
-        AddParam upp = new AddParam();
-        upp.addPara("s", s);
-        upp.addPara("limit", 20);
-        upp.addPara("csrf_token", "");
-        return upp;
+    public static FillParam SearchMusic(String s) {
+        FillParam fp = new FillParam();
+        fp.addParam("s", s);
+        fp.addParam("limit", 20);
+        fp.addParam("csrf_token", "");
+        return fp;
     }
 
     //http://music.163.com/weapi/search/suggest/web?csrf_token=
-    public static AddParam SearchGeShou(String s) {
-        AddParam upp = new AddParam();
-        upp.addPara("s", s);
-        upp.addPara("offset", "0");
-        upp.addPara("csrf_token", "");
-        upp.addPara("total", "true");
-        upp.addPara("type", "100");
-        upp.addPara("limit", "90");
-        return upp;
+    public static FillParam SearchGeShou(String s) {
+        FillParam fp = new FillParam();
+        fp.addParam("s", s);
+        fp.addParam("offset", "0");
+        fp.addParam("csrf_token", "");
+        fp.addParam("total", "true");
+        fp.addParam("type", "100");
+        fp.addParam("limit", "90");
+        return fp;
     }
     //todo:analyse more api
 

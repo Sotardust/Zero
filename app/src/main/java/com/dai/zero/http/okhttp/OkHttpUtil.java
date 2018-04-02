@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.FormBody;
@@ -23,36 +22,36 @@ import okhttp3.Response;
 public class OkHttpUtil {
 
     //无参数请求数据
-    public static void getRequest(final String url, ObserverListener observerListener) {
+    public static void getRequest(final String url, ObserverListener<String> observerListener) {
         executeSubscribe(getObservable(url), observerListener);
     }
 
     //自定义get请求数据
-    public static void getRequest(ObservableOnSubscribeListener listener, ObserverListener observerListener) {
+    public static void getRequest(ObservableOnSubscribeListener<String> listener, ObserverListener<String> observerListener) {
         executeSubscribe(getObservable(listener), observerListener);
     }
 
     //有参数请求数据
-    public static void postRequest(final String url, final HashMap<String, String> param, ObserverListener observerListener) {
+    public static void postRequest(final String url, final HashMap<String, String> param, ObserverListener<String> observerListener) {
         executeSubscribe(getObservable(url, param), observerListener);
     }
 
     //自定义post请求数据
-    public static void postRequest(ObservableOnSubscribeListener listener, ObserverListener observerListener) {
+    public static void postRequest(ObservableOnSubscribeListener<String> listener, ObserverListener<String> observerListener) {
         executeSubscribe(getObservable(listener), observerListener);
     }
 
-    private static void executeSubscribe(Observable observable, ObserverListener observerListener) {
+    private static void executeSubscribe(Observable<String> observable, ObserverListener<String> observerListener) {
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observerListener);
     }
 
-    private static Observable getObservable(ObservableOnSubscribeListener listener) {
+    private static Observable<String> getObservable(ObservableOnSubscribeListener<String> listener) {
         return Observable.create(listener);
     }
 
-    private static Observable getObservable(final String url) {
+    private static Observable<String> getObservable(final String url) {
         return Observable.create(new ObservableOnSubscribeListener<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
@@ -63,7 +62,7 @@ public class OkHttpUtil {
         });
     }
 
-    private static Observable getObservable(final String url, final HashMap<String, String> param) {
+    private static Observable<String> getObservable(final String url, final HashMap<String, String> param) {
         return Observable.create(new ObservableOnSubscribeListener<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {

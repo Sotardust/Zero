@@ -4,7 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +13,9 @@ import com.dai.zero.BaseFragment;
 import com.dai.zero.R;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.di.GlideApp;
-import com.dai.zero.http.netease.AddParam;
-import com.dai.zero.http.netease.NetEaseApi;
-import com.dai.zero.http.okhttp.OkHttpUtil;
 import com.dai.zero.main.main.find.banner.BannerView;
-import com.dai.zero.main.util.ParamAnalysisUtil;
-import com.dai.zero.util.inter.ObservableOnSubscribeListener;
-import com.dai.zero.util.inter.ObserverListener;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import javax.inject.Inject;
