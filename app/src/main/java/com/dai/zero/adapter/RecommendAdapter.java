@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dai.zero.R;
@@ -22,6 +21,7 @@ public class RecommendAdapter extends BaseAdapter<String> {
 
     private static final String TAG = "RecommendAdapter";
 
+
     @Override
     public RecyclerView.ViewHolder onCreateView(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_find, parent, false);
@@ -32,13 +32,13 @@ public class RecommendAdapter extends BaseAdapter<String> {
     public void onBindView(RecyclerView.ViewHolder holder, final int position, final String value) {
         if (holder instanceof ViewHolder) {
             ((ViewHolder) holder).itemContent.setText(value);
-            if (position!=0) ((ViewHolder) holder).itemLlTitle.setVisibility(View.GONE);
-            ((ViewHolder) holder).itemTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "onClick() returned: " + value);
-                }
-            });
+//            if (position!=0) ((ViewHolder) holder).itemLlTitle.setVisibility(View.INVISIBLE);
+//            ((ViewHolder) holder).itemTitle.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Log.d(TAG, "onClick() returned: " + value);
+//                }
+//            });
             ((ViewHolder) holder).itemIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -50,10 +50,7 @@ public class RecommendAdapter extends BaseAdapter<String> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_title)
-        TextView itemTitle;
-        @BindView(R.id.item_ll_title)
-        LinearLayout itemLlTitle;
+
         @BindView(R.id.item_icon)
         ImageView itemIcon;
         @BindView(R.id.item_content)

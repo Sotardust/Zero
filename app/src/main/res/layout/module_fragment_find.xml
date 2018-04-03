@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp" />
 
-    <include layout="@layout/module_include_part_find_view" />
+    <include layout="@layout/module_include_part_find_view"  />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"

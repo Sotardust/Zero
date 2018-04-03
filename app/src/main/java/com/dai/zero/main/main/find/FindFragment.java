@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.dai.zero.adapter.RecommendAdapter;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.di.GlideApp;
 import com.dai.zero.main.main.find.banner.BannerView;
+import com.dai.zero.main.util.ItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +42,9 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     @Inject
     FindContract.Presenter mPresenter;
 
+    Unbinder unbinder;
     @BindView(R.id.banner_view)
     BannerView bannerView;
-    Unbinder unbinder;
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
 
@@ -106,13 +108,22 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
             }
         });
+
         RecommendAdapter adapter = new RecommendAdapter();
         ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            list.add("数据"+i);
+        for (int i = 0; i < 30; i++) {
+            list.add("数据" + i);
         }
         adapter.setData(list);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
+        ItemDecoration decoration = new ItemDecoration();
+        decoration.setOnClickListener(new ItemDecoration.OnClickListener() {
+            @Override
+            public void onClick() {
+                Log.d(TAG, "onClick: ");
+            }
+        });
+        recycleView.addItemDecoration(decoration);
         recycleView.setLayoutManager(layoutManager);
         recycleView.setAdapter(adapter);
     }

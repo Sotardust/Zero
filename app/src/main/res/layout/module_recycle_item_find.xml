@@ -1,55 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
     android:background="@color/colorWhite"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/item_ll_title"
+    <ImageView
+        android:id="@+id/item_icon"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="@mipmap/module_ic_default" />
 
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="推荐歌单" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:background="@mipmap/module_ic_more" />
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/item_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/item_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/acg_1" />
-
-        <TextView
-            android:id="@+id/item_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lines="2"
-            android:text="fdsadsafasfsadfdfasfdsaffdsaf" />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="2"
+        android:text="fdsadsafasfsadfdfasfdsaffdsaf" />
 
 </LinearLayout>
