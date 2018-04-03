@@ -4,6 +4,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 
 import com.dai.zero.BaseFragment;
 import com.dai.zero.R;
+import com.dai.zero.adapter.RecommendAdapter;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.di.GlideApp;
 import com.dai.zero.main.main.find.banner.BannerView;
@@ -40,6 +43,8 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     @BindView(R.id.banner_view)
     BannerView bannerView;
     Unbinder unbinder;
+    @BindView(R.id.recycleView)
+    RecyclerView recycleView;
 
     @Inject
     public FindFragment() {
@@ -101,5 +106,14 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
             }
         });
+        RecommendAdapter adapter = new RecommendAdapter();
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            list.add("数据"+i);
+        }
+        adapter.setData(list);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3);
+        recycleView.setLayoutManager(layoutManager);
+        recycleView.setAdapter(adapter);
     }
 }
