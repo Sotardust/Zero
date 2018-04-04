@@ -1,7 +1,7 @@
 package com.dai.zero.http.okhttp;
 
-import com.dai.zero.util.inter.ObservableCallback;
-import com.dai.zero.util.inter.ObserverCallback;
+import com.dai.zero.util.callback.ObservableCallback;
+import com.dai.zero.util.callback.ObserverCallback;
 
 import java.util.HashMap;
 

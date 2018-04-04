@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import com.dai.zero.R;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,9 +24,9 @@ public class MainAdapter extends BaseAdapter<String> {
     }
 
     @Override
-    public void onBindView(RecyclerView.ViewHolder holder, int position, String value) {
+    public void onBindView(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
-            ((ViewHolder) holder).itemContent.setText(value);
+            ((ViewHolder) holder).itemContent.setText(data.get(position));
         }
     }
 

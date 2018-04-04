@@ -1,4 +1,4 @@
-package com.dai.zero.util.inter;
+package com.dai.zero.util.listener;
 
 import android.support.v4.view.ViewPager;
 

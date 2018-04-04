@@ -5,7 +5,7 @@ import android.util.Log;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.http.okhttp.OkHttpUtil;
 import com.dai.zero.main.util.ParamAnalysisUtil;
-import com.dai.zero.util.inter.ObserverCallback;
+import com.dai.zero.util.callback.ObserverCallback;
 
 import java.util.HashMap;
 

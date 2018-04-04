@@ -20,8 +20,8 @@ import com.dai.zero.R;
 import com.dai.zero.di.GlideApp;
 import com.dai.zero.main.util.ConvertUtil;
 import com.dai.zero.main.util.ScreenUtil;
-import com.dai.zero.util.inter.ObserverCallback;
-import com.dai.zero.util.inter.onPageChangerListener;
+import com.dai.zero.util.callback.ObserverCallback;
+import com.dai.zero.util.listener.onPageChangerListener;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

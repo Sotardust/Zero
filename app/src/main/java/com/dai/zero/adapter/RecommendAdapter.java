@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.dai.zero.R;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,32 +23,59 @@ public class RecommendAdapter extends BaseAdapter<String> {
 
     private static final String TAG = "RecommendAdapter";
 
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_DECORATION = 1;
+    private static final int TYPE_CONTENT = 2;
+    private static final int TYPE_FOOTER = 3;
+
 
     @Override
     public RecyclerView.ViewHolder onCreateView(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_find, parent, false);
-        return new ViewHolder(view);
+        Log.d(TAG, "onCreateView() called with: viewType = [" + viewType + "]");
+        RecyclerView.ViewHolder viewHolder = null;
+        switch (viewType) {
+            case -1:
+                break;
+            case TYPE_DECORATION:
+                viewHolder = new DViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_decoration, parent, false));
+                System.out.println("RecommendAdapter.onCreateView");
+                break;
+            case TYPE_CONTENT:
+                viewHolder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_find, parent, false));
+                break;
+            default:
+                break;
+        }
+        return viewHolder;
     }
 
     @Override
-    public void onBindView(RecyclerView.ViewHolder holder, final int position, final String value) {
+    public void onBindView(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ViewHolder) {
-            ((ViewHolder) holder).itemContent.setText(value);
-//            if (position!=0) ((ViewHolder) holder).itemLlTitle.setVisibility(View.INVISIBLE);
-//            ((ViewHolder) holder).itemTitle.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Log.d(TAG, "onClick() returned: " + value);
-//                }
-//            });
+            final int index = position - (position / 6);
+            ((ViewHolder) holder).itemContent.setText(data.get(index));
             ((ViewHolder) holder).itemIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "onClick() returned: " + position);
+                    listener.onItemClickListener(data.get(index), index);
+                }
+            });
+        } else if (holder instanceof DViewHolder) {
+            final int index = position / 6;
+            ((DViewHolder) holder).itemTitle.setText(mTitleList.get(position / 6));
+            ((DViewHolder) holder).itemTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClickListener(mTitleList.get(index), index);
                 }
             });
         }
+    }
 
+
+    @Override
+    public int getItemCount() {
+        return getData().size() + mTitleList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,9 +85,44 @@ public class RecommendAdapter extends BaseAdapter<String> {
         @BindView(R.id.item_content)
         TextView itemContent;
 
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        switch (position % 6) {
+            case -1:
+                return TYPE_HEADER;
+            case 0:
+                return TYPE_DECORATION;
+            case 100:
+                return TYPE_FOOTER;
+            default:
+                return TYPE_CONTENT;
+
+        }
+
+
+    }
+
+    class DViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.item_title)
+        TextView itemTitle;
+
+        DViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    private ArrayList<String> mTitleList;
+
+    public void setTitleList(ArrayList<String> mTitleList) {
+        this.mTitleList = mTitleList;
     }
 }

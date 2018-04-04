@@ -1,4 +1,4 @@
-package com.dai.zero.util.inter;
+package com.dai.zero.util.callback;
 
 
 import io.reactivex.disposables.Disposable;

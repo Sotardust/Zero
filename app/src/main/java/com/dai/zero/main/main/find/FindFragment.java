@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,11 @@ import com.dai.zero.adapter.RecommendAdapter;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.di.GlideApp;
 import com.dai.zero.main.main.find.banner.BannerView;
-import com.dai.zero.main.util.ItemDecoration;
+import com.dai.zero.main.util.MyItemDecoration;
+import com.dai.zero.util.listener.RecycleItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -109,22 +110,53 @@ public class FindFragment extends BaseFragment implements FindContract.View {
             }
         });
 
-        RecommendAdapter adapter = new RecommendAdapter();
+        final RecommendAdapter adapter = new RecommendAdapter();
         ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             list.add("数据" + i);
         }
+        String[] mTitle = getContext().getResources().getStringArray(R.array.module_recommend_title);
+        ArrayList<String> mTitleList = new ArrayList<>();
+        Collections.addAll(mTitleList, mTitle);
         adapter.setData(list);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
-        ItemDecoration decoration = new ItemDecoration();
-        decoration.setOnClickListener(new ItemDecoration.OnClickListener() {
+        adapter.setTitleList(mTitleList);
+        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
+        MyItemDecoration decoration = new MyItemDecoration();
+
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
-            public void onClick() {
-                Log.d(TAG, "onClick: ");
+            public int getSpanSize(int position) {
+                int type = adapter.getItemViewType(position % 6);
+                int count = 0;
+                if (type == 2) {
+                    count = 2;
+                } else {
+                    count = 3;
+                }
+                System.out.println("position = " + position);
+//                if (position==0&&position==6&&position==12) {
+//                    return 2 ;
+//                }else{
+//                    return 3 ;
+//                }
+
+                return count;
             }
         });
+
         recycleView.addItemDecoration(decoration);
         recycleView.setLayoutManager(layoutManager);
         recycleView.setAdapter(adapter);
+        adapter.setRecycleItemClickListener(new RecycleItemClickListener() {
+            @Override
+            public void onItemClickListener(String value, int position) {
+
+                System.out.println("value = " + value);
+                System.out.println("position = " + position);
+
+            }
+        });
+
+
     }
 }

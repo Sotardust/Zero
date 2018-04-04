@@ -2,8 +2,9 @@ package com.dai.zero.adapter;
 
 import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
+
+import com.dai.zero.util.listener.RecycleItemClickListener;
 
 import java.util.ArrayList;
 
@@ -11,14 +12,20 @@ import java.util.ArrayList;
  * Created by Administrator on 2018/4/2 0002.
  */
 
-public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private ArrayList<T> data;
+    protected ArrayList<T> data;
 
-    private OnItemClickLister<T> onItemClickLister;
+    protected OnItemClickLister<T> onItemClickLister;
 
     public void setOnItemClickLister(OnItemClickLister<T> onItemClickLister) {
         this.onItemClickLister = onItemClickLister;
+    }
+
+    protected RecycleItemClickListener listener;
+
+    public void setRecycleItemClickListener(RecycleItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -28,16 +35,17 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-        final T value = data.get(position);
-        if (onItemClickLister != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickLister.onItemClick(position, value);
-                }
-            });
-        }
-        onBindView(holder, position, value);
+
+//        if (onItemClickLister != null) {
+//            holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    onItemClickLister.onItemClick(position, value);
+//                }
+//            });
+//        }
+
+        onBindView(holder, position);
     }
 
     @Override
@@ -56,7 +64,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     public abstract RecyclerView.ViewHolder onCreateView(ViewGroup parent, int viewType);
 
-    public abstract void onBindView(RecyclerView.ViewHolder holder, int position, T value);
+    public abstract void onBindView(RecyclerView.ViewHolder holder, int position);
 
     public interface OnItemClickLister<T> {
         void onItemClick(int position, T data);

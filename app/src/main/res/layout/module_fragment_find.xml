@@ -7,16 +7,15 @@
     <com.dai.zero.main.main.find.banner.BannerView
         android:id="@+id/banner_view"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp" />
 
-    <include layout="@layout/module_include_part_find_view"  />
+    <include layout="@layout/module_include_part_find_view"  android:visibility="gone"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <!--<include layout="@layout/module_recycle_item_find"></include>-->
 
 </LinearLayout>
