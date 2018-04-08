@@ -23,10 +23,10 @@ public class RecommendAdapter extends BaseAdapter<String> {
 
     private static final String TAG = "RecommendAdapter";
 
-    private static final int TYPE_HEADER = 0;
-    private static final int TYPE_DECORATION = 1;
-    private static final int TYPE_CONTENT = 2;
-    private static final int TYPE_FOOTER = 3;
+    private static final int TYPE_HEADER = -1;
+    private static final int TYPE_DECORATION = 0;
+    private static final int TYPE_CONTENT = 1;
+    private static final int TYPE_FOOTER = 2;
 
 
     @Override
@@ -38,7 +38,6 @@ public class RecommendAdapter extends BaseAdapter<String> {
                 break;
             case TYPE_DECORATION:
                 viewHolder = new DViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_decoration, parent, false));
-                System.out.println("RecommendAdapter.onCreateView");
                 break;
             case TYPE_CONTENT:
                 viewHolder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_find, parent, false));
@@ -52,7 +51,7 @@ public class RecommendAdapter extends BaseAdapter<String> {
     @Override
     public void onBindView(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ViewHolder) {
-            final int index = position - (position / 6);
+            final int index = position - (position / 7);
             ((ViewHolder) holder).itemContent.setText(data.get(index));
             ((ViewHolder) holder).itemIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -61,8 +60,8 @@ public class RecommendAdapter extends BaseAdapter<String> {
                 }
             });
         } else if (holder instanceof DViewHolder) {
-            final int index = position / 6;
-            ((DViewHolder) holder).itemTitle.setText(mTitleList.get(position / 6));
+            final int index = position / 7;
+            ((DViewHolder) holder).itemTitle.setText(mTitleList.get(position / 7));
             ((DViewHolder) holder).itemTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -85,7 +84,6 @@ public class RecommendAdapter extends BaseAdapter<String> {
         @BindView(R.id.item_content)
         TextView itemContent;
 
-
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -95,9 +93,9 @@ public class RecommendAdapter extends BaseAdapter<String> {
 
     @Override
     public int getItemViewType(int position) {
-        switch (position % 6) {
+        switch (position % 7) {
             case -1:
-                return TYPE_HEADER;
+//                return TYPE_HEADER;
             case 0:
                 return TYPE_DECORATION;
             case 100:
@@ -106,7 +104,6 @@ public class RecommendAdapter extends BaseAdapter<String> {
                 return TYPE_CONTENT;
 
         }
-
 
     }
 

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,7 +113,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
         final RecommendAdapter adapter = new RecommendAdapter();
         ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 45; i++) {
             list.add("数据" + i);
         }
         String[] mTitle = getContext().getResources().getStringArray(R.array.module_recommend_title);
@@ -122,27 +123,16 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         adapter.setTitleList(mTitleList);
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         MyItemDecoration decoration = new MyItemDecoration();
-
+        layoutManager.setOrientation(GridLayoutManager.VERTICAL);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                int type = adapter.getItemViewType(position % 6);
-                int count = 0;
-                if (type == 2) {
-                    count = 2;
-                } else {
-                    count = 3;
-                }
-                System.out.println("position = " + position);
-//                if (position==0&&position==6&&position==12) {
-//                    return 2 ;
-//                }else{
-//                    return 3 ;
-//                }
-
-                return count;
+                int type = adapter.getItemViewType(position % 7);
+//                int count = type ==0?3:1;
+                return type == 0 ? 3 : 1;
             }
         });
+
 
         recycleView.addItemDecoration(decoration);
         recycleView.setLayoutManager(layoutManager);
@@ -153,6 +143,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
                 System.out.println("value = " + value);
                 System.out.println("position = " + position);
+                Log.d(TAG, "onItemClickListener() called with: value = [" + value + "], position = [" + position + "]");
 
             }
         });
