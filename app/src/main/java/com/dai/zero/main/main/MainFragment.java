@@ -112,6 +112,7 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
         viewPager.setAdapter(new BaseFragmentPageAdapter(getChildFragmentManager(), mFragmentList, titles));
         viewPager.setCurrentItem(0);
 
+//        viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

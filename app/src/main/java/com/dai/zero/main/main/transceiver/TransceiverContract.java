@@ -8,9 +8,25 @@ import com.dai.zero.BaseView;
  */
 
 public interface TransceiverContract {
-    interface View extends BaseView< Presenter > {
+    interface View extends BaseView<Presenter> {
+
+        void showTestView1(String string);
+
+        void showTestView2(String string);
+
+        void showTestView3(String string);
+
+        void showTestView4(String string);
     }
 
-    interface Presenter extends BasePresenter< View > {
+    interface Presenter extends BasePresenter<View> {
+
+        void getNoSleep();
+
+        void getSleepTwo();
+
+        void getSleepThree();
+
+        void getSleepFive();
     }
 }

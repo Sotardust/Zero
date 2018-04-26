@@ -1,5 +1,7 @@
 package com.dai.zero.main.main.find;
 
+import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dai.zero.BaseFragment;
 import com.dai.zero.R;
@@ -49,6 +52,20 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     BannerView bannerView;
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
+    @BindView(R.id.show_1)
+    TextView show1;
+    @BindView(R.id.show_2)
+    TextView show2;
+    @BindView(R.id.show_3)
+    TextView show3;
+    @BindView(R.id.show_4)
+    TextView show4;
+
+
+    ImageView loadImage;
+    AnimationDrawable animationDrawable;
+
+    View view;
 
     @Inject
     public FindFragment() {
@@ -58,10 +75,15 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_find, container, false);
+        view = inflater.inflate(R.layout.module_fragment_find, container, false);
         unbinder = ButterKnife.bind(this, view);
         bindViews();
         mPresenter.getNeteaseData();
+        mPresenter.getNoSleep();
+        mPresenter.getSleepTwo();
+        mPresenter.getSleepThree();
+        mPresenter.getSleepFive();
+        Log.d(TAG, "onCreateView: ");
         return view;
     }
 
@@ -71,24 +93,30 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         super.onResume();
         mPresenter.takeView(this);
         bannerView.onResume();
+
+        Log.d(TAG, "onResume: ");
     }
 
     @Override
     public void onPause() {
         super.onPause();
         bannerView.stop();
+        Log.d(TAG, "onPause: ");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        mPresenter.dropView();
+        Log.d(TAG, "onDestroyView: ");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.dropView();
+
+        Log.d(TAG, "onDestroy: ");
     }
 
     @Override
@@ -136,6 +164,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
         recycleView.addItemDecoration(decoration);
         recycleView.setLayoutManager(layoutManager);
+
         recycleView.setAdapter(adapter);
         adapter.setRecycleItemClickListener(new RecycleItemClickListener() {
             @Override
@@ -146,8 +175,91 @@ public class FindFragment extends BaseFragment implements FindContract.View {
                 Log.d(TAG, "onItemClickListener() called with: value = [" + value + "], position = [" + position + "]");
 
             }
+
+            @Override
+            public void onItemLongClickListener(String value, int position) {
+                super.onItemLongClickListener(value, position);
+            }
         });
 
 
+    }
+
+    @Override
+    public void showTestView1(String string) {
+        show1.setText(string);
+    }
+
+    @Override
+    public void showTestView2(String string) {
+        show2.setText(string);
+    }
+
+    @Override
+    public void showTestView3(String string) {
+        show3.setText(string);
+    }
+
+    @Override
+    public void showTestView4(String string) {
+        show4.setText(string);
+    }
+
+    @Override
+    public void showLoading() {
+//        loading.inflate();
+        loadImage = (ImageView) view.findViewById(R.id.load_image);
+        loadImage.setImageResource(R.drawable.module_load_anim);
+        animationDrawable = (AnimationDrawable) loadImage.getDrawable();
+        animationDrawable.start();
+
+    }
+
+    @Override
+    public void hideLoading() {
+//        loading.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.d(TAG, "onAttach: ");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(TAG, "onDetach: ");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: ");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "onActivityCreated: ");
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        Log.d(TAG, "onHiddenChanged: " + hidden);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.d(TAG, "setUserVisibleHint: " + isVisibleToUser);
     }
 }

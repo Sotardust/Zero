@@ -23,6 +23,7 @@ import com.dai.zero.main.util.ScreenUtil;
 import com.dai.zero.util.callback.ObserverCallback;
 import com.dai.zero.util.listener.onPageChangerListener;
 
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -149,7 +150,6 @@ public class BannerView extends RelativeLayout {
         observable = Observable.interval(intervalTime, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-
     }
 
     //重新开始图片轮播
@@ -171,6 +171,7 @@ public class BannerView extends RelativeLayout {
     private void unSubscribe() {
         if (disposable != null && !disposable.isDisposed())
             disposable.dispose();
+//        observable.unsubscribeOn(Schedulers.io());
     }
 
 

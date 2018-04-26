@@ -66,6 +66,7 @@ public class RecommendAdapter extends BaseAdapter<String> {
                 @Override
                 public void onClick(View v) {
                     listener.onItemClickListener(mTitleList.get(index), index);
+
                 }
             });
         }
