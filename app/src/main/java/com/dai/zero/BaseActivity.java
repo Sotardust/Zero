@@ -3,6 +3,7 @@ package com.dai.zero;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 public abstract class BaseActivity extends DaggerAppCompatActivity {
 
+    private static final String TAG = "BaseActivity";
     // 管理运行的所有的activity
     private final static List<AppCompatActivity> mActivities = new LinkedList<AppCompatActivity>();
 
@@ -22,15 +24,21 @@ public abstract class BaseActivity extends DaggerAppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("BaseActivity.onCreate");
-        synchronized (mActivities) {
-            mActivities.add(this);
-        }
+//        synchronized (mActivities) {
+//            mActivities.add(this);
+//        }
     }
 
     //添加Activity
-    private void addActivity(AppCompatActivity activity) {
-        mActivities.add(activity);
+//    private void addActivity(AppCompatActivity activity) {
+//        mActivities.add(activity);
+//    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+        ZeroApplication.getInstance(getApplicationContext()).watch(this);
     }
-
-
 }

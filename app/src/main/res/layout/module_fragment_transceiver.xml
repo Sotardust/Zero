@@ -1,34 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_1"
+    <LinearLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="电台" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/show_1"
-        android:text="dfafasfsaf"
-        android:background="@color/colorWhite"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp" />
+        <TextView
+            android:id="@+id/text_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="电台" />
 
-    <TextView
-        android:id="@+id/show_2"
+        <TextView
+            android:id="@+id/show_1"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@color/colorWhite"
+            android:text="dfafasfsaf" />
+
+        <TextView
+            android:id="@+id/show_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/show_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/show_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn"
         android:layout_width="wrap_content"
+        android:text="跳转到A"
         android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/show_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/show_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+    <include layout="@layout/module_include_load" />
+</FrameLayout>

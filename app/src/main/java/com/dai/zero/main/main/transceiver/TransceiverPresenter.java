@@ -37,11 +37,11 @@ public class TransceiverPresenter implements TransceiverContract.Presenter {
     @Override
     public void dropView() {
         mTransceiverView = null;
-        for (Disposable disposable : disposeList) {
-            if (disposable != null && !disposable.isDisposed())
-                disposable.dispose();
-        }
-        if (disposeList.size() != 0) disposeList.clear();
+//        for (Disposable disposable : disposeList) {
+//            if (disposable != null && !disposable.isDisposed())
+//                disposable.dispose();
+//        }
+//        if (disposeList.size() != 0) disposeList.clear();
     }
 
     private ArrayList<Disposable> disposeList = new ArrayList<>();

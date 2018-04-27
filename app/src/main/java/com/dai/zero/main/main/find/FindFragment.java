@@ -1,11 +1,8 @@
 package com.dai.zero.main.main.find;
 
-import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dai.zero.BaseFragment;
@@ -20,7 +18,6 @@ import com.dai.zero.R;
 import com.dai.zero.adapter.RecommendAdapter;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.di.GlideApp;
-import com.dai.zero.main.main.find.banner.BannerView;
 import com.dai.zero.main.util.MyItemDecoration;
 import com.dai.zero.util.listener.RecycleItemClickListener;
 
@@ -48,8 +45,8 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     FindContract.Presenter mPresenter;
 
     Unbinder unbinder;
-    @BindView(R.id.banner_view)
-    BannerView bannerView;
+//    @BindView(R.id.banner_view)
+//    BannerView bannerView;
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
     @BindView(R.id.show_1)
@@ -60,30 +57,29 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     TextView show3;
     @BindView(R.id.show_4)
     TextView show4;
-
-
+    @BindView(R.id.load_image)
     ImageView loadImage;
-    AnimationDrawable animationDrawable;
+    @BindView(R.id.ll_load)
+    LinearLayout llLoad;
 
-    View view;
+    private View view;
+    private AnimationDrawable animationDrawable;
+    private boolean isFirstVisible = false;
+    private boolean isVisibleToUser = false;
 
     @Inject
     public FindFragment() {
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.module_fragment_find, container, false);
         unbinder = ButterKnife.bind(this, view);
-        bindViews();
-        mPresenter.getNeteaseData();
-        mPresenter.getNoSleep();
-        mPresenter.getSleepTwo();
-        mPresenter.getSleepThree();
-        mPresenter.getSleepFive();
-        Log.d(TAG, "onCreateView: ");
+        isFirstVisible = true;
+        if (isVisibleToUser()) {
+            onFragmentFirstVisible();
+        }
         return view;
     }
 
@@ -92,20 +88,22 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     public void onResume() {
         super.onResume();
         mPresenter.takeView(this);
-        bannerView.onResume();
-
-        Log.d(TAG, "onResume: ");
+//        if (isVisibleToUser())
+//            bannerView.onResume();
+        isFirstVisible =false;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        bannerView.stop();
+//        if (isVisibleToUser())
+//            bannerView.stop();
         Log.d(TAG, "onPause: ");
     }
 
     @Override
     public void onDestroyView() {
+
         super.onDestroyView();
         unbinder.unbind();
         mPresenter.dropView();
@@ -115,8 +113,8 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         Log.d(TAG, "onDestroy: ");
+
     }
 
     @Override
@@ -130,14 +128,14 @@ public class FindFragment extends BaseFragment implements FindContract.View {
             ImageView imageView = new ImageView(getContext());
             imageViews.add(GlideApp.with(this).load(url).centerCrop().into(imageView).getView());
         }
-        bannerView.setImageViewList(imageViews);
-        bannerView.start();
-        bannerView.setOnBannerViewClickListener(new BannerView.OnBannerViewClickListener() {
-            @Override
-            public void OnItemClick(int position) {
-
-            }
-        });
+//        bannerView.setImageViewList(imageViews);
+//        bannerView.start();
+//        bannerView.setOnBannerViewClickListener(new BannerView.OnBannerViewClickListener() {
+//            @Override
+//            public void OnItemClick(int position) {
+//
+//            }
+//        });
 
         final RecommendAdapter adapter = new RecommendAdapter();
         ArrayList<String> list = new ArrayList<>();
@@ -175,11 +173,6 @@ public class FindFragment extends BaseFragment implements FindContract.View {
                 Log.d(TAG, "onItemClickListener() called with: value = [" + value + "], position = [" + position + "]");
 
             }
-
-            @Override
-            public void onItemLongClickListener(String value, int position) {
-                super.onItemLongClickListener(value, position);
-            }
         });
 
 
@@ -207,59 +200,49 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
     @Override
     public void showLoading() {
-//        loading.inflate();
-        loadImage = (ImageView) view.findViewById(R.id.load_image);
-        loadImage.setImageResource(R.drawable.module_load_anim);
-        animationDrawable = (AnimationDrawable) loadImage.getDrawable();
-        animationDrawable.start();
+        if (isFirstVisible()) {
+            llLoad.setVisibility(View.VISIBLE);
+            loadImage = (ImageView) view.findViewById(R.id.load_image);
+            loadImage.setImageResource(R.drawable.module_load_anim);
+            animationDrawable = (AnimationDrawable) loadImage.getDrawable();
+            animationDrawable.start();
+        }
 
     }
 
     @Override
     public void hideLoading() {
-//        loading.setVisibility(View.GONE);
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Log.d(TAG, "onAttach: ");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d(TAG, "onDetach: ");
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: ");
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated: ");
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        Log.d(TAG, "onHiddenChanged: " + hidden);
+        if (isFirstVisible()) {
+            animationDrawable.stop();
+            llLoad.setVisibility(View.GONE);
+            isFirstVisible = false;
+        }
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Log.d(TAG, "setUserVisibleHint: " + isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
+        if (isVisibleToUser && isFirstVisible()) {
+            onFragmentFirstVisible();
+        }
     }
+
+    private void onFragmentFirstVisible() {
+//        bindViews();
+//        mPresenter.getNeteaseData();
+        mPresenter.getNoSleep();
+        mPresenter.getSleepTwo();
+        mPresenter.getSleepThree();
+        mPresenter.getSleepFive();
+    }
+
+    public boolean isFirstVisible() {
+        return isFirstVisible;
+    }
+
+    public boolean isVisibleToUser() {
+        return isVisibleToUser;
+    }
+
 }

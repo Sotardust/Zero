@@ -1,51 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <com.dai.zero.main.main.find.banner.BannerView
-        android:id="@+id/banner_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:visibility="gone" />
-
-    <include
-        layout="@layout/module_include_part_find_view"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/show_1"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:background="@color/colorWhite"
-        android:text="fasffsafasfasf"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/show_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/show_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/show_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:orientation="vertical">
+
+        <!--<com.dai.zero.main.main.find.banner.BannerView-->
+            <!--android:id="@+id/banner_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:visibility="gone" />-->
+
+        <include
+            layout="@layout/module_include_part_find_view"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/show_1"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@color/colorWhite"
+            android:text="fasffsafasfasf"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/show_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/show_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/show_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <!--<ViewStub-->
+    <!--android:id="@+id/viewStub"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout="@layout/module_include_load"-->
+    <!--android:layout_height="match_parent">-->
 
     <include layout="@layout/module_include_load" />
-</LinearLayout>
+    <!--</ViewStub>-->
+
+</FrameLayout>

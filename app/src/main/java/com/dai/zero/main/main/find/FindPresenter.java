@@ -9,7 +9,6 @@ import com.dai.zero.main.util.ParamAnalysisUtil;
 import com.dai.zero.util.callback.ObserverCallback;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.inject.Inject;
@@ -36,20 +35,20 @@ public class FindPresenter implements FindContract.Presenter {
     public void takeView(FindContract.View view) {
 
         this.mFindView = new WeakReference<FindContract.View>(view);
-        mFindView.get().showLoading();
+//        mFindView.get().showLoading();
     }
 
     @Override
     public void dropView() {
         mFindView = null;
-        for (Disposable disposable : disposeList) {
-            if (disposable != null && !disposable.isDisposed())
-                disposable.dispose();
-        }
-        if (disposeList.size() != 0) disposeList.clear();
+//        for (Disposable disposable : disposeList) {
+//            if (disposable != null && !disposable.isDisposed())
+//                disposable.dispose();
+//        }
+//        if (disposeList.size() != 0) disposeList.clear();
     }
 
-    private ArrayList<Disposable> disposeList = new ArrayList<>();
+//    private ArrayList<Disposable> disposeList = new ArrayList<>();
 
 
 
@@ -171,7 +170,7 @@ public class FindPresenter implements FindContract.Presenter {
                 Log.d(TAG, "onNext() returned: " + s);
                 if (mFindView != null) {
                     mFindView.get().showTestView4(s);
-                    mFindView.get().hideLoading();
+//                    mFindView.get().hideLoading();
                 }
             }
 

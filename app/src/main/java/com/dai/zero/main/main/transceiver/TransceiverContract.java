@@ -17,6 +17,10 @@ public interface TransceiverContract {
         void showTestView3(String string);
 
         void showTestView4(String string);
+
+        void showLoading();
+
+        void hideLoading();
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -1,17 +1,22 @@
 package com.dai.zero.main.main.transceiver;
 
-import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dai.zero.BaseFragment;
 import com.dai.zero.R;
 import com.dai.zero.di.ActivityScoped;
+import com.dai.zero.main.main.AActivity;
 
 import javax.inject.Inject;
 
@@ -41,6 +46,17 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
     TextView show3;
     @BindView(R.id.show_4)
     TextView show4;
+    @BindView(R.id.load_image)
+    ImageView loadImage;
+    @BindView(R.id.ll_load)
+    LinearLayout llLoad;
+    @BindView(R.id.btn)
+    Button btn;
+
+    private View view;
+    private AnimationDrawable animationDrawable;
+    private boolean isFirstVisible = false;
+    private boolean isVisibleToUser = false;
 
     @Inject
     public TransceiverFragment() {
@@ -49,13 +65,21 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.module_fragment_transceiver, container, false);
+        view = inflater.inflate(R.layout.module_fragment_transceiver, container, false);
         Log.d(TAG, "onCreateView: ");
         unbinder = ButterKnife.bind(this, view);
-        mPresenter.getNoSleep();
-        mPresenter.getSleepTwo();
-        mPresenter.getSleepThree();
-        mPresenter.getSleepFive();
+        isFirstVisible = true;
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AActivity.class);
+                startActivity(intent);
+//                getActivity().finish();
+            }
+        });
+//        if (isVisibleToUser()) {
+//            onFragmentFirstVisible();
+//        }
         return view;
     }
 
@@ -64,15 +88,12 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
     public void onResume() {
         super.onResume();
         mPresenter.takeView(this);
-//        bannerView.onResume();
-        Log.d(TAG, "onResume: ");
+        isFirstVisible = false;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        bannerView.stop();
-        Log.d(TAG, "onPause: ");
     }
 
     @Override
@@ -80,56 +101,21 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
         super.onDestroyView();
         unbinder.unbind();
         mPresenter.dropView();
-        Log.d(TAG, "onDestroyView: ");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        Log.d(TAG, "onDestroy: ");
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        Log.d(TAG, "onAttach: ");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        Log.d(TAG, "onDetach: ");
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: ");
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.d(TAG, "onActivityCreated: ");
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        Log.d(TAG, "onHiddenChanged: " + hidden);
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Log.d(TAG, "setUserVisibleHint: " + isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
+        if (isVisibleToUser && isFirstVisible()) {
+            onFragmentFirstVisible();
+        }
     }
 
     @Override
@@ -151,5 +137,43 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
     public void showTestView4(String string) {
         show4.setText(string);
     }
+
+    @Override
+    public void showLoading() {
+        if (isFirstVisible()) {
+            llLoad.setVisibility(View.VISIBLE);
+            loadImage = (ImageView) view.findViewById(R.id.load_image);
+            loadImage.setImageResource(R.drawable.module_load_anim);
+            animationDrawable = (AnimationDrawable) loadImage.getDrawable();
+            animationDrawable.start();
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        if (isFirstVisible()) {
+            animationDrawable.stop();
+            llLoad.setVisibility(View.GONE);
+            isFirstVisible = false;
+            animationDrawable = null;
+        }
+    }
+
+    private void onFragmentFirstVisible() {
+
+//        mPresenter.getNoSleep();
+//        mPresenter.getSleepTwo();
+//        mPresenter.getSleepThree();
+//        mPresenter.getSleepFive();
+    }
+
+    public boolean isFirstVisible() {
+        return isFirstVisible;
+    }
+
+    public boolean isVisibleToUser() {
+        return isVisibleToUser;
+    }
+
 
 }
