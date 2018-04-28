@@ -23,8 +23,6 @@ import com.dai.zero.main.rightmain.RightMainFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,13 +49,13 @@ public class MainActivity extends BaseActivity {
     ViewPager contentFrame;
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
-
-    @Inject
-    MainFragment mainFragment;
-    @Inject
-    LeftMainFragment leftMainFragment;
-    @Inject
-    RightMainFragment rightMainFragment;
+//
+//    @Inject
+//    MainFragment mainFragment;
+//    @Inject
+//    LeftMainFragment leftMainFragment;
+//    @Inject
+//    RightMainFragment rightMainFragment;
 
 //    @Inject
 //    Lazy<MainFragment> mainFragmentProvider;
@@ -76,9 +74,9 @@ public class MainActivity extends BaseActivity {
 //        }
 
         List<Fragment> mFragmentList = new ArrayList<>();
-        mFragmentList.add(leftMainFragment);
-        mFragmentList.add(mainFragment);
-        mFragmentList.add(rightMainFragment);
+        mFragmentList.add(new LeftMainFragment());
+        mFragmentList.add(new MainFragment());
+        mFragmentList.add(new RightMainFragment());
         contentFrame.setAdapter(new BaseFragmentPageAdapter(getSupportFragmentManager(), mFragmentList));
         contentFrame.setCurrentItem(1);
         contentFrame.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -163,5 +161,11 @@ public class MainActivity extends BaseActivity {
             case R.id.textView:
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }

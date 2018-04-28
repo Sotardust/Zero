@@ -17,15 +17,15 @@ public abstract class BaseActivity extends DaggerAppCompatActivity {
 
     private static final String TAG = "BaseActivity";
     // 管理运行的所有的activity
-    private final static List<BaseActivity> mActivities = new LinkedList<BaseActivity>();
+    private final  List<BaseActivity> mActivities = new LinkedList<BaseActivity>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         System.out.println("BaseActivity.onCreate");
-//        synchronized (mActivities) {
+        synchronized (mActivities) {
         mActivities.add(this);
-//        }
+        }
     }
 
     //添加Activity
@@ -42,8 +42,9 @@ public abstract class BaseActivity extends DaggerAppCompatActivity {
         }
     }
 
-    private void exit() {
-        mActivities.removeAll(mActivities);
+    protected void exit() {
+        mActivities.clear();
+        Log.d(TAG, "exit() returned: " + mActivities.size());
     }
 
 

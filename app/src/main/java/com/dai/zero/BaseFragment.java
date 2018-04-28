@@ -13,7 +13,7 @@ import dagger.android.support.DaggerFragment;
  * Created by dai on 2018/2/13.
  */
 
-public abstract class BaseFragment extends DaggerFragment {
+public class BaseFragment extends DaggerFragment {
 
     private static final String TAG = "BaseFragment";
 

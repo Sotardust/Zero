@@ -23,6 +23,7 @@ import com.dai.zero.util.listener.RecycleItemClickListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -71,6 +72,8 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     public FindFragment() {
     }
 
+    private final static List<String> mActivities = new LinkedList<String>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,6 +83,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         if (isVisibleToUser()) {
             onFragmentFirstVisible();
         }
+        mActivities.add("添加");
         return view;
     }
 
