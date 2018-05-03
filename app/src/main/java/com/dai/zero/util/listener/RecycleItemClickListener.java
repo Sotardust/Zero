@@ -8,12 +8,12 @@ public class RecycleItemClickListener implements ItemClickListener {
 
 
     @Override
-    public void onItemClickListener(String value, int position) {
+    public void onItemClickListener(int type,String value, int position) {
 
     }
 
     @Override
-    public void onItemLongClickListener(String value, int position) {
+    public void onItemLongClickListener(int type,String value, int position) {
 
     }
 }

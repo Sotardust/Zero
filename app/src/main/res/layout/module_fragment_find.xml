@@ -3,54 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<com.dai.zero.main.main.find.banner.BannerView-->
+    <!--android:id="@+id/banner_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:visibility="visible" />-->
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <!--<com.dai.zero.main.main.find.banner.BannerView-->
-            <!--android:id="@+id/banner_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:visibility="gone" />-->
-
-        <include
-            layout="@layout/module_include_part_find_view"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/show_1"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:background="@color/colorWhite"
-            android:text="fasffsafasfasf"
-            android:visibility="visible" />
-
-        <TextView
-            android:id="@+id/show_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible" />
-
-        <TextView
-            android:id="@+id/show_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible" />
-
-        <TextView
-            android:id="@+id/show_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycleView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-    </LinearLayout>
+        android:visibility="visible" />
+    <!--</LinearLayout>-->
 
 
     <!--<ViewStub-->

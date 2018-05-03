@@ -1,5 +1,6 @@
 package com.dai.zero.main.main.find.banner;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,7 +24,6 @@ import com.dai.zero.main.util.ConvertUtil;
 import com.dai.zero.main.util.ScreenUtil;
 import com.dai.zero.util.callback.ObserverCallback;
 import com.dai.zero.util.listener.onPageChangerListener;
-
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -66,7 +67,7 @@ public class BannerView extends RelativeLayout {
 
     public BannerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        initViews(context);
     }
 
     public void setImageViewList(List<ImageView> imageViews) {
@@ -83,33 +84,25 @@ public class BannerView extends RelativeLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                isMove = false;
-                unSubscribe();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (!isMove) {
-                    isMove = true;
-                    subscribe();
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                isMove = false;
-                //对bannerView点击事件进行监听
-                onBannerViewClickListener.OnItemClick(getCurrentIndex(loopIndex));
-                subscribe();
-                break;
-            default:
-                break;
-        }
+
         return onTouchEvent(event);
     }
 
+
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//            performClick();
+//        }
+//        return super.onTouchEvent(event);
+//    }
+
     //适配viewpager设置自动轮播
+    @SuppressLint("ClickableViewAccessibility")
     public void start() {
         for (int i = 0; i < imageViews.size(); i++) {
             fillData(i, 0);
+            if (viewPager != null) viewPager.removeAllViews();
             viewPager.addView(imageViews.get(i));
         }
         viewPager.addOnPageChangeListener(new onPageChangerListener() {
@@ -123,6 +116,38 @@ public class BannerView extends RelativeLayout {
                 }
             }
         });
+
+        viewPager.setOnTouchListener(new OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        isMove = false;
+                        unSubscribe();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if (!isMove) {
+                            isMove = true;
+                            subscribe();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+
+                        isMove = false;
+                        //对bannerView点击事件进行监听
+                        onBannerViewClickListener.OnItemClick(getCurrentIndex(loopIndex));
+
+                        subscribe();
+                        break;
+                    default:
+                        break;
+                }
+
+                return false;
+            }
+        });
+
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setCurrentItem(1000);
@@ -174,18 +199,28 @@ public class BannerView extends RelativeLayout {
 //        observable.unsubscribeOn(Schedulers.io());
     }
 
+//    p performClick();
+
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
+    }
 
     //初始化视图
-    private void init(Context context) {
+    private void initViews(Context context) {
         this.context = context;
         ScreenUtil screenUtil = new ScreenUtil(context);
         lp = new LinearLayout.LayoutParams(ConvertUtil.dip2px(context, 8), ConvertUtil.dip2px(context, 8), 1);
         LayoutInflater.from(context).inflate(R.layout.module_view_banner, this, true);
+        Button privateFm = findViewById(R.id.module_btn_private_fm);
+        Button daily = findViewById(R.id.module_btn_daily_recommendation);
+        Button songSheet = findViewById(R.id.module_btn_song_sheet);
+        Button rankingList = findViewById(R.id.module_btn_ranking_list);
         viewPager = (ViewPager) findViewById(R.id.vp_banner);
         ll = (LinearLayout) findViewById(R.id.dot_banner);
         //控制相邻两个点之间的距离
         ll.setPadding(screenUtil.getWidth() / 3, 0, screenUtil.getWidth() / 3, 0);
-
     }
 
     //通过取余获取viewpager当前坐标
@@ -240,5 +275,4 @@ public class BannerView extends RelativeLayout {
     public interface OnBannerViewClickListener {
         void OnItemClick(int position);
     }
-
 }

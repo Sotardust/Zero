@@ -77,14 +77,6 @@ public class OkHttpUtil {
                 emitter.onNext(response.body().string());
             }
         });
-//        Observable observable = Observable.create(new ObservableOnSubscribe() {
-//            @Override
-//            public void subscribe(ObservableEmitter emitter) throws Exception {
-//
-//            }
-//        }).subscribeOn(Schedulers.io());
-
-//        observable.unsubscribeOn(Schedulers.)
     }
 
     private static Observable<String> getObservable(final String url, final HashMap<String, String> param) {

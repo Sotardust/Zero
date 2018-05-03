@@ -6,7 +6,7 @@ package com.dai.zero.util.listener;
 
 public interface ItemClickListener {
 
-    void onItemClickListener(String value, int position);
+    void onItemClickListener(int type, String value, int position);
 
-    void onItemLongClickListener(String value, int position);
+    void onItemLongClickListener(int type,String value, int position);
 }

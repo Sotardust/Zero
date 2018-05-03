@@ -5,9 +5,13 @@
     android:background="@color/colorWhite"
     android:orientation="horizontal">
 
-    <LinearLayout style="@style/module_style_ll">
+    <LinearLayout
+      
+        style="@style/module_style_ll">
 
         <Button
+            android:id="@+id/module_btn_private_fm"
+            android:focusable="true"
             style="@style/module_style_btn"
             android:background="@drawable/module_find_private_fm" />
 
@@ -17,9 +21,13 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/module_style_ll">
+    <LinearLayout
+     
+        style="@style/module_style_ll">
 
         <Button
+            android:id="@+id/module_btn_daily_recommendation"
+            android:focusable="true"
             style="@style/module_style_btn"
             android:background="@drawable/module_find_daily_recommendation" />
 
@@ -29,10 +37,14 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/module_style_ll">
+    <LinearLayout
+      
+        style="@style/module_style_ll">
 
         <Button
             style="@style/module_style_btn"
+            android:id="@+id/module_btn_song_sheet"
+            android:focusable="true"
             android:background="@drawable/module_find_song_sheet" />
 
         <TextView
@@ -41,9 +53,13 @@
 
     </LinearLayout>
 
-    <LinearLayout style="@style/module_style_ll">
+    <LinearLayout
+       
+        style="@style/module_style_ll">
 
         <Button
+            android:id="@+id/module_btn_ranking_list"
+            android:focusable="true"
             style="@style/module_style_btn"
             android:background="@drawable/module_find_ranking_list" />
 

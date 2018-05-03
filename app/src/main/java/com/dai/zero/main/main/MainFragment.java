@@ -66,7 +66,7 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.module_fragment_main, container, false);
         unbinder = ButterKnife.bind(this, root);
-//        bindViews();
+        bindViews();
         return root;
     }
 

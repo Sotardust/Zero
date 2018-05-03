@@ -23,7 +23,6 @@ import io.reactivex.disposables.Disposable;
 public class FindPresenter implements FindContract.Presenter {
 
     private static final String TAG = "FindPresenter";
-//    private FindContract.View mFindView;
 
     @Inject
     FindPresenter() {
@@ -35,7 +34,6 @@ public class FindPresenter implements FindContract.Presenter {
     public void takeView(FindContract.View view) {
 
         this.mFindView = new WeakReference<FindContract.View>(view);
-//        mFindView.get().showLoading();
     }
 
     @Override
@@ -49,7 +47,6 @@ public class FindPresenter implements FindContract.Presenter {
     }
 
 //    private ArrayList<Disposable> disposeList = new ArrayList<>();
-
 
 
     @Override
