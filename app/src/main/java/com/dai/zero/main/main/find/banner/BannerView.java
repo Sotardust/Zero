@@ -82,29 +82,15 @@ public class BannerView extends RelativeLayout {
         this.onBannerViewClickListener = onBannerViewClickListener;
     }
 
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-
-        return onTouchEvent(event);
-    }
-
-
-//    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            performClick();
-//        }
-//        return super.onTouchEvent(event);
-//    }
-
     //适配viewpager设置自动轮播
     @SuppressLint("ClickableViewAccessibility")
-    public void start() {
+    public void excute() {
         for (int i = 0; i < imageViews.size(); i++) {
             fillData(i, 0);
             if (viewPager != null) viewPager.removeAllViews();
             viewPager.addView(imageViews.get(i));
         }
+
         viewPager.addOnPageChangeListener(new onPageChangerListener() {
             @Override
             public void onPageSelected(int position) {
@@ -123,34 +109,25 @@ public class BannerView extends RelativeLayout {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        isMove = false;
                         unSubscribe();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        if (!isMove) {
-                            isMove = true;
-                            subscribe();
-                        }
                         break;
                     case MotionEvent.ACTION_UP:
-
-                        isMove = false;
                         //对bannerView点击事件进行监听
                         onBannerViewClickListener.OnItemClick(getCurrentIndex(loopIndex));
-
                         subscribe();
                         break;
                     default:
                         break;
                 }
-
                 return false;
             }
         });
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter();
         viewPager.setAdapter(viewPagerAdapter);
-        viewPager.setCurrentItem(1000);
+        viewPager.setCurrentItem(1001);
         observerListener = new ObserverCallback<Long>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -169,7 +146,6 @@ public class BannerView extends RelativeLayout {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                Log.e(TAG, "onError: ", e);
             }
         };
         observable = Observable.interval(intervalTime, TimeUnit.SECONDS)
@@ -177,30 +153,16 @@ public class BannerView extends RelativeLayout {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    //重新开始图片轮播
-    public void onResume() {
-        subscribe();
-    }
-
-    //停止图片轮播取消订阅
-    public void stop() {
-        unSubscribe();
-    }
-
     //订阅图片轮播事件
-    private void subscribe() {
+    public void subscribe() {
         observable.subscribe(observerListener);
     }
 
     //取消订阅图片轮播事件
-    private void unSubscribe() {
+    public void unSubscribe() {
         if (disposable != null && !disposable.isDisposed())
             disposable.dispose();
-//        observable.unsubscribeOn(Schedulers.io());
     }
-
-//    p performClick();
-
 
     @Override
     public boolean performClick() {
@@ -213,10 +175,6 @@ public class BannerView extends RelativeLayout {
         ScreenUtil screenUtil = new ScreenUtil(context);
         lp = new LinearLayout.LayoutParams(ConvertUtil.dip2px(context, 8), ConvertUtil.dip2px(context, 8), 1);
         LayoutInflater.from(context).inflate(R.layout.module_view_banner, this, true);
-        Button privateFm = findViewById(R.id.module_btn_private_fm);
-        Button daily = findViewById(R.id.module_btn_daily_recommendation);
-        Button songSheet = findViewById(R.id.module_btn_song_sheet);
-        Button rankingList = findViewById(R.id.module_btn_ranking_list);
         viewPager = (ViewPager) findViewById(R.id.vp_banner);
         ll = (LinearLayout) findViewById(R.id.dot_banner);
         //控制相邻两个点之间的距离

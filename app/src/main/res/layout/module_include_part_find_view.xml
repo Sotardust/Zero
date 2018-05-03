@@ -11,7 +11,6 @@
 
         <Button
             android:id="@+id/module_btn_private_fm"
-            android:focusable="true"
             style="@style/module_style_btn"
             android:background="@drawable/module_find_private_fm" />
 
@@ -27,7 +26,6 @@
 
         <Button
             android:id="@+id/module_btn_daily_recommendation"
-            android:focusable="true"
             style="@style/module_style_btn"
             android:background="@drawable/module_find_daily_recommendation" />
 
@@ -44,7 +42,6 @@
         <Button
             style="@style/module_style_btn"
             android:id="@+id/module_btn_song_sheet"
-            android:focusable="true"
             android:background="@drawable/module_find_song_sheet" />
 
         <TextView
@@ -59,7 +56,6 @@
 
         <Button
             android:id="@+id/module_btn_ranking_list"
-            android:focusable="true"
             style="@style/module_style_btn"
             android:background="@drawable/module_find_ranking_list" />
 

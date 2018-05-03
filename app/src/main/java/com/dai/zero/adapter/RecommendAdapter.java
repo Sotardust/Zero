@@ -1,6 +1,7 @@
 package com.dai.zero.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,26 +32,27 @@ public class RecommendAdapter extends BaseAdapter<String> {
     private static final int TYPE_CONTENT = 1;
     private static final int TYPE_FOOTER = 2;
 
-    public void setmBannerView(BannerView mBannerView) {
+    private BannerView mBannerView;
+
+    public void setBannerView(BannerView mBannerView) {
         this.mBannerView = mBannerView;
     }
 
-    private BannerView mBannerView;
-
     @Override
     public RecyclerView.ViewHolder onCreateView(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder = null;
+        RecyclerView.ViewHolder viewHolder;
         switch (viewType) {
             case TYPE_HEADER:
-//                viewHolder = new HViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_banner_view, parent, false));
-//                break;
+                viewHolder = new HViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_banner_view, parent, false));
+                break;
             case TYPE_DECORATION:
                 viewHolder = new DViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_decoration, parent, false));
                 break;
             case TYPE_CONTENT:
-                viewHolder = new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_find, parent, false));
+                viewHolder = new CViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_find, parent, false));
                 break;
             default:
+                viewHolder = new CViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_find, parent, false));
                 break;
         }
         return viewHolder;
@@ -59,10 +61,10 @@ public class RecommendAdapter extends BaseAdapter<String> {
     @Override
     public void onBindView(RecyclerView.ViewHolder holder, int position) {
         position = getRealPosition(position);
-        if (holder instanceof ViewHolder) {
+        if (holder instanceof CViewHolder) {
             final int index = position - (position / 7) - 1;
-            ((ViewHolder) holder).itemContent.setText(data.get(index));
-            ((ViewHolder) holder).itemIcon.setOnClickListener(new View.OnClickListener() {
+            ((CViewHolder) holder).itemContent.setText(data.get(index));
+            ((CViewHolder) holder).itemIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onItemClickListener(TYPE_CONTENT, data.get(index), index);
@@ -80,9 +82,11 @@ public class RecommendAdapter extends BaseAdapter<String> {
             });
         } else if (holder instanceof HViewHolder) {
             ((HViewHolder) holder).bannerView.setImageViewList(imageViews);
-            ((HViewHolder) holder).bannerView.start();
+            ((HViewHolder) holder).bannerView.excute();
+            ((HViewHolder) holder).bannerView.unSubscribe();
+            ((HViewHolder) holder).bannerView.subscribe();
             this.mBannerView = ((HViewHolder) holder).bannerView;
-            setmBannerView(((HViewHolder) holder).bannerView);
+            setBannerView(((HViewHolder) holder).bannerView);
             ((HViewHolder) holder).bannerView.setOnBannerViewClickListener(new BannerView.OnBannerViewClickListener() {
                 @Override
                 public void OnItemClick(int position) {
@@ -141,7 +145,7 @@ public class RecommendAdapter extends BaseAdapter<String> {
     }
 
     //当前position真实位置
-    public int getRealPosition(int position) {
+    private int getRealPosition(int position) {
         return position - 1;
     }
 
@@ -149,21 +153,20 @@ public class RecommendAdapter extends BaseAdapter<String> {
         return mBannerView;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class CViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_icon)
         ImageView itemIcon;
         @BindView(R.id.item_content)
         TextView itemContent;
 
-        ViewHolder(View itemView) {
+        CViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
     }
 
-    static class DViewHolder extends RecyclerView.ViewHolder {
+    class DViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_title)
         TextView itemTitle;
 
@@ -173,7 +176,7 @@ public class RecommendAdapter extends BaseAdapter<String> {
         }
     }
 
-    static class HViewHolder extends RecyclerView.ViewHolder {
+    class HViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.banner_view)
         BannerView bannerView;
         @BindView(R.id.module_btn_private_fm)

@@ -81,14 +81,9 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume: ");
         mPresenter.takeView(this);
-        System.out.println("isVisibleToUser = " + isVisibleToUser());
-        System.out.println("adapter != null = " + (adapter != null));
-        System.out.println("adapter.getBannerView() != null = " + (adapter.getBannerView() != null));
         if (isVisibleToUser() && adapter != null && adapter.getBannerView() != null) {
-            Log.d(TAG, "onResume11: ");
-//            adapter.getBannerView().onResume();
+            adapter.getBannerView().subscribe();
         }
         isFirstVisible = false;
     }
@@ -97,14 +92,12 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     public void onPause() {
         super.onPause();
         if (isVisibleToUser() && adapter != null && adapter.getBannerView() != null) {
-            adapter.getBannerView().stop();
-            Log.d(TAG, "onPause: ");
+            adapter.getBannerView().unSubscribe();
         }
     }
 
     @Override
     public void onDestroyView() {
-
         super.onDestroyView();
         unbinder.unbind();
         mPresenter.dropView();
@@ -127,7 +120,6 @@ public class FindFragment extends BaseFragment implements FindContract.View {
             imageViews.add(GlideApp.with(this).load(url).centerCrop().into(imageView).getView());
         }
 
-
         adapter = new RecommendAdapter();
         String[] mTitle = getContext().getResources().getStringArray(R.array.module_recommend_title);
 
@@ -141,10 +133,6 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         adapter.setData(list);
         adapter.setTitleList(mTitleList);
         adapter.setImageViewList(imageViews);
-        if (isVisibleToUser() && adapter != null && adapter.getBannerView() != null) {
-            Log.d(TAG, "onResume11 start : ");
-            adapter.getBannerView().start();
-        }
 
 
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
@@ -157,7 +145,6 @@ public class FindFragment extends BaseFragment implements FindContract.View {
                 return type <= 0 ? 3 : 1;
             }
         });
-
 
         recycleView.addItemDecoration(decoration);
         recycleView.setLayoutManager(layoutManager);
