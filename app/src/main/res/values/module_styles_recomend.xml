@@ -1,5 +1,11 @@
 <resources>
 
+    <style name="module_text_common">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="module_style_lwc" parent="Base.TextAppearance.AppCompat.Button">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -19,11 +25,14 @@
         <item name="android:layout_weight">1</item>
     </style>
 
-    <style name="module_style_text" parent="module_style_lwc">
+    <style name="module_style_text" parent="module_text_common">
         <item name="android:layout_marginTop">5dp</item>
+        <!--<item name="textSize">12sp</item>-->
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
     </style>
 
-    <style name="module_style_btn" parent="module_style_lwc" >
+    <style name="module_style_btn" parent="module_style_lwc">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">50dp</item>
     </style>

@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 
-import com.dai.zero.adapter.BaseAdapter;
 import com.dai.zero.adapter.MainAdapter;
 import com.dai.zero.di.ActivityScoped;
 
@@ -56,12 +55,12 @@ public class MainPresenter implements MainContract.Presenter {
         assert mMainView != null;
         adapter.setData(list);
         mMainView.setAdapter(adapter);
-        adapter.setOnItemClickLister(new BaseAdapter.OnItemClickLister<String>() {
-            @Override
-            public void onItemClick(int position, String data) {
-
-            }
-        });
+//        adapter.setOnItemClickLister(new BaseAdapter.OnItemClickLister<String>() {
+//            @Override
+//            public void onItemClick(int position, String data) {
+//
+//            }
+//        });
     }
 
     private int count = 0;

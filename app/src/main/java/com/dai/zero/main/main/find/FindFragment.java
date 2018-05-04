@@ -19,7 +19,13 @@ import com.dai.zero.adapter.RecommendAdapter;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.di.GlideApp;
 import com.dai.zero.main.util.MyItemDecoration;
+import com.dai.zero.main.util.ParamAnalysisUtil;
 import com.dai.zero.util.listener.RecycleItemClickListener;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,8 +51,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     FindContract.Presenter mPresenter;
 
     Unbinder unbinder;
-    //    @BindView(R.id.banner_view)
-//    BannerView bannerView;
+
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
     @BindView(R.id.load_image)
@@ -124,15 +129,51 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         String[] mTitle = getContext().getResources().getStringArray(R.array.module_recommend_title);
 
         ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < mTitle.length * 6; i++) {
-            list.add("数据" + i);
-        }
+
         ArrayList<String> mTitleList = new ArrayList<>();
         Collections.addAll(mTitleList, mTitle);
+
+        ArrayList<String> imageList = new ArrayList<>();
+        ArrayList<String> titleList = new ArrayList<>();
+        ArrayList<String> addressList = new ArrayList<>();
+
+        Document document = Jsoup.parse(ParamAnalysisUtil.neteaseContent);
+        Elements elements = document.select("ul");
+        for (Element element : elements) {
+            for (Element element1 : element.children()) {
+                for (Element element2 : element1.children()) {
+                    for (Element element3 : element2.children()) {
+                        String image = element3.attr("src");
+                        String title = element3.attr("title");
+                        String address = element3.attr("href");
+
+                        if (!image.isEmpty()) imageList.add(image);
+
+                        if (!title.isEmpty() && imageList.size() > titleList.size())
+                            titleList.add(title);
+
+                        if (!address.isEmpty() && imageList.size() > addressList.size()) {
+                            addressList.add(address);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        ArrayList<String> urlList = new ArrayList<>();
+
+
+        for (int i = 0; i < mTitle.length * 6; i++) {
+            list.add(titleList.get(i));
+            urlList.add(imageList.get(i));
+        }
 
         adapter.setData(list);
         adapter.setTitleList(mTitleList);
         adapter.setImageViewList(imageViews);
+        adapter.setUrlList(urlList);
 
 
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);

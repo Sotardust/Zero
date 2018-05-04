@@ -7,13 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -84,7 +82,7 @@ public class BannerView extends RelativeLayout {
 
     //适配viewpager设置自动轮播
     @SuppressLint("ClickableViewAccessibility")
-    public void excute() {
+    public void execute() {
         for (int i = 0; i < imageViews.size(); i++) {
             fillData(i, 0);
             if (viewPager != null) viewPager.removeAllViews();

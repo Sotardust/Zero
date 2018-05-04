@@ -166,6 +166,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
     }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        // activity 都不可见的情况下，进程保活
+        Log.d(TAG, "onTrimMemory: ");
+    }
+
 }

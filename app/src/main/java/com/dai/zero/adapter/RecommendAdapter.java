@@ -1,7 +1,10 @@
 package com.dai.zero.adapter;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +12,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.dai.zero.R;
+import com.dai.zero.di.GlideApp;
 import com.dai.zero.main.main.find.banner.BannerView;
 
 import java.util.ArrayList;
@@ -33,13 +39,16 @@ public class RecommendAdapter extends BaseAdapter<String> {
     private static final int TYPE_FOOTER = 2;
 
     private BannerView mBannerView;
+    private Context context;
 
-    public void setBannerView(BannerView mBannerView) {
+    private void setBannerView(BannerView mBannerView) {
         this.mBannerView = mBannerView;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateView(ViewGroup parent, int viewType) {
+        this.context = parent.getContext();
+
         RecyclerView.ViewHolder viewHolder;
         switch (viewType) {
             case TYPE_HEADER:
@@ -59,11 +68,19 @@ public class RecommendAdapter extends BaseAdapter<String> {
     }
 
     @Override
-    public void onBindView(RecyclerView.ViewHolder holder, int position) {
+    public void onBindView(final RecyclerView.ViewHolder holder, int position) {
         position = getRealPosition(position);
         if (holder instanceof CViewHolder) {
             final int index = position - (position / 7) - 1;
             ((CViewHolder) holder).itemContent.setText(data.get(index));
+            GlideApp.with(context).asBitmap().load(urlList.get(index)).centerCrop()
+                    .placeholder(context.getResources().getDrawable(R.mipmap.module_ic_default))
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            ((CViewHolder) holder).itemIcon.setImageBitmap(resource);
+                        }
+                    });
             ((CViewHolder) holder).itemIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,7 +99,7 @@ public class RecommendAdapter extends BaseAdapter<String> {
             });
         } else if (holder instanceof HViewHolder) {
             ((HViewHolder) holder).bannerView.setImageViewList(imageViews);
-            ((HViewHolder) holder).bannerView.excute();
+            ((HViewHolder) holder).bannerView.execute();
             ((HViewHolder) holder).bannerView.unSubscribe();
             ((HViewHolder) holder).bannerView.subscribe();
             this.mBannerView = ((HViewHolder) holder).bannerView;
@@ -153,6 +170,7 @@ public class RecommendAdapter extends BaseAdapter<String> {
         return mBannerView;
     }
 
+
     class CViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_icon)
@@ -196,6 +214,7 @@ public class RecommendAdapter extends BaseAdapter<String> {
 
     private ArrayList<String> mTitleList;
     private List<ImageView> imageViews;
+    private List<String> urlList;
 
     public void setTitleList(ArrayList<String> mTitleList) {
         this.mTitleList = mTitleList;
@@ -203,5 +222,9 @@ public class RecommendAdapter extends BaseAdapter<String> {
 
     public void setImageViewList(List<ImageView> imageViews) {
         this.imageViews = imageViews;
+    }
+
+    public void setUrlList(List<String> urlList) {
+        this.urlList = urlList;
     }
 }

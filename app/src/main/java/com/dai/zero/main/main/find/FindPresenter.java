@@ -29,25 +29,19 @@ public class FindPresenter implements FindContract.Presenter {
     }
 
     private WeakReference<FindContract.View> mFindView;
+//
+//    @Inject
+//    FindModule module ;
 
     @Override
     public void takeView(FindContract.View view) {
-
         this.mFindView = new WeakReference<FindContract.View>(view);
     }
 
     @Override
     public void dropView() {
         mFindView = null;
-//        for (Disposable disposable : disposeList) {
-//            if (disposable != null && !disposable.isDisposed())
-//                disposable.dispose();
-//        }
-//        if (disposeList.size() != 0) disposeList.clear();
     }
-
-//    private ArrayList<Disposable> disposeList = new ArrayList<>();
-
 
     @Override
     public void getNeteaseData() {
