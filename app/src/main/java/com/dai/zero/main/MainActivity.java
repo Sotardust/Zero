@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.dai.zero.BaseActivity;
+import com.dai.zero.MyViewPager;
 import com.dai.zero.R;
 import com.dai.zero.adapter.BaseFragmentPageAdapter;
 import com.dai.zero.main.leftmain.LeftMainFragment;
@@ -46,7 +47,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.rg_home_viewpager_contorl)
     RadioGroup rgHomeViewpagerControl;
     @BindView(R.id.contentFrame)
-    ViewPager contentFrame;
+    MyViewPager contentFrame;
     @BindView(R.id.drawerLayout)
     DrawerLayout drawerLayout;
 //

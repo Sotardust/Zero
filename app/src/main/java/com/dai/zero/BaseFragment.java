@@ -30,7 +30,7 @@ public class BaseFragment extends DaggerFragment {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy: ");
-        ZeroApplication.getInstance(getContext()).watch(this);
+//        ZeroApplication.getInstance(getContext()).watch(this);
     }
 
     @Override

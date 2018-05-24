@@ -1,7 +1,9 @@
 package com.dai.zero;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.os.IResultReceiver;
 import android.util.Log;
 
 import java.util.LinkedList;
@@ -25,6 +27,8 @@ public abstract class BaseActivity extends DaggerAppCompatActivity {
         System.out.println("BaseActivity.onCreate");
         synchronized (mActivities) {
         mActivities.add(this);
+//            Intent intent = new Intent();
+//            Intent.Flag
         }
     }
 
@@ -53,6 +57,6 @@ public abstract class BaseActivity extends DaggerAppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy: ");
         deleteActivity(this);
-        ZeroApplication.getInstance(getApplicationContext()).watch(this);
+//        ZeroApplication.getInstance(getApplicationContext()).watch(this);
     }
 }
