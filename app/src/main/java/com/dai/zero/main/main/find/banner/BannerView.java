@@ -21,7 +21,7 @@ import com.dai.zero.di.GlideApp;
 import com.dai.zero.main.util.ConvertUtil;
 import com.dai.zero.main.util.ScreenUtil;
 import com.dai.zero.util.callback.ObserverCallback;
-import com.dai.zero.util.listener.onPageChangerListener;
+import com.dai.zero.util.callback.OnPageChangerCallback;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -89,7 +89,7 @@ public class BannerView extends RelativeLayout {
             viewPager.addView(imageViews.get(i));
         }
 
-        viewPager.addOnPageChangeListener(new onPageChangerListener() {
+        viewPager.addOnPageChangeListener(new OnPageChangerCallback() {
             @Override
             public void onPageSelected(int position) {
                 //手动滑动时对ViewPager循环索引赋值

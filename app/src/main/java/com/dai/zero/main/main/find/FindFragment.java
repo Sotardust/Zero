@@ -2,6 +2,7 @@ package com.dai.zero.main.main.find;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,17 +17,21 @@ import android.widget.Toast;
 import com.dai.zero.BaseFragment;
 import com.dai.zero.R;
 import com.dai.zero.adapter.RecommendAdapter;
+import com.dai.zero.bean.FindBean;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.di.GlideApp;
+import com.dai.zero.http.okhttp.OkHttpUtil;
 import com.dai.zero.main.util.MyItemDecoration;
 import com.dai.zero.main.util.ParamAnalysisUtil;
+import com.dai.zero.util.callback.ObservableCallback;
+import com.dai.zero.util.callback.ObserverCallback;
 import com.dai.zero.util.listener.RecycleItemClickListener;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +41,12 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 /**
@@ -79,6 +90,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         if (isVisibleToUser()) {
             onFragmentFirstVisible();
         }
+
         return view;
     }
 
@@ -90,6 +102,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         if (isVisibleToUser() && adapter != null && adapter.getBannerView() != null) {
             adapter.getBannerView().subscribe();
         }
+//        mPresenter.getNeteaseData();
         isFirstVisible = false;
     }
 
@@ -129,52 +142,40 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         String[] mTitle = getContext().getResources().getStringArray(R.array.module_recommend_title);
 
         ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> urlList = new ArrayList<>();
 
         ArrayList<String> mTitleList = new ArrayList<>();
         Collections.addAll(mTitleList, mTitle);
-
-        ArrayList<String> imageList = new ArrayList<>();
-        ArrayList<String> titleList = new ArrayList<>();
-        ArrayList<String> addressList = new ArrayList<>();
-
-        Document document = Jsoup.parse(ParamAnalysisUtil.neteaseContent);
-        Elements elements = document.select("ul");
-        for (Element element : elements) {
-            for (Element element1 : element.children()) {
-                for (Element element2 : element1.children()) {
-                    for (Element element3 : element2.children()) {
-                        String image = element3.attr("src");
-                        String title = element3.attr("title");
-                        String address = element3.attr("href");
-
-                        if (!image.isEmpty()) imageList.add(image);
-
-                        if (!title.isEmpty() && imageList.size() > titleList.size())
-                            titleList.add(title);
-
-                        if (!address.isEmpty() && imageList.size() > addressList.size()) {
-                            addressList.add(address);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-
-        ArrayList<String> urlList = new ArrayList<>();
+        FindBean findBean = ParamAnalysisUtil.getFindData();
 
 
         for (int i = 0; i < mTitle.length * 6; i++) {
-            list.add(titleList.get(i));
-            urlList.add(imageList.get(i));
+//            System.out.println("findBean.getTitleList().get(i) = " + findBean.getTitleList().get(i));
+//            System.out.println("findBean.getAddressList().get(i) = " + findBean.getAddressList().get(i));
+            list.add(findBean.getTitleList().get(i));
+            urlList.add(findBean.getImageList().get(i));
         }
 
         adapter.setData(list);
         adapter.setTitleList(mTitleList);
         adapter.setImageViewList(imageViews);
         adapter.setUrlList(urlList);
+//        String url = "http://music.163.com/playlist?id=2129466456";
+        String url = "http://music.163.com/song?id=553310138";
+        OkHttpUtil.getRequest(url, new ObserverCallback<String>() {
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+//                Log.d(TAG, "onNext() returned: " + s);
+//                System.out.println("s = " + s);
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                Log.d(TAG, "onError() returned: " + e.toString());
+            }
+        });
 
         final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         MyItemDecoration decoration = new MyItemDecoration();
@@ -194,13 +195,14 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         adapter.setRecycleItemClickListener(new RecycleItemClickListener() {
             @Override
             public void onItemClickListener(int type, String value, int position) {
-                Toast.makeText(getContext(), value, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), value, Toast.LENGTH_SHORT).show();
                 switch (type) {
                     case -2:
                         Log.d(TAG, "BANNER_VIEW() returned: " + position);
                         break;
                     case -1:
                         Log.d(TAG, "BANNER_VIEW() returned: " + position);
+                        getSong();
                         break;
                     case 0:
                         Log.d(TAG, "onItemClickListener() returned: " + 0);
@@ -286,6 +288,89 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
     public boolean isVisibleToUser() {
         return isVisibleToUser;
+    }
+
+    private void getSong() {
+        Log.d(TAG, "getSong: ");
+        Observable.create(new ObservableCallback<InputStream>() {
+
+            @Override
+            public void subscribe(ObservableEmitter<InputStream> emitter) throws Exception {
+                super.subscribe(emitter);
+                Log.d(TAG, "subscribe: ");
+                String url = "http://39.106.220.113:8080/mobile/music/qiansixi";
+                Request request = new Request.Builder()
+                        .url(url)
+                        .build();
+                Response response = OkHttpUtil.getInstance().newCall(request).execute();
+                Log.d(TAG, "subscribe: header" + response.headers().toString());
+                System.out.println("response contentLength = " + response.body().contentLength());
+                emitter.onNext(response.body().byteStream());
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ObserverCallback<InputStream>() {
+                    @Override
+                    public void onNext(final InputStream inputStream) {
+                        super.onNext(inputStream);
+//                        System.out.println("inputStream.reset() = " + inputStream..reset());
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Looper.prepare();
+
+                                String path = Environment.getExternalStorageDirectory() + File.separator + "Music" + File.separator + "富士山下.mp3";
+                                Log.d(TAG, "onNext: path = " + path);
+                                File file1 = new File(path);
+                                if (!file1.exists()) {
+                                    try {
+                                        file1.createNewFile();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+//                                File file = new File(Environment.getExternalStorageDirectory(), "牵丝戏11.mp3");// 设置路径
+//                                Looper.loop();
+                                FileWriter fw = null;//以追加的模式将字符写入
+                                BufferedWriter bw = null;//以追加的模式将字符写入
+                                try {
+                                    fw = new FileWriter(file1, true);
+                                    bw = new BufferedWriter(fw);//又包裹一层缓冲流 增强IO功能
+                                    byte[] bytes = new byte[10508323];
+                                    int lenght = inputStream.read(bytes);
+                                    System.out.println("inputStream.read(bytes) = " + lenght);
+                                    bw.write(lenght);
+                                    bw.flush();//将内容一次性写入文件
+
+//                            FileOutputStream outputStream = new FileOutputStream(file, true);
+                                    Log.d(TAG, "onNext: 写入完成");
+                                    Toast.makeText(getContext(), "写入成功", Toast.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    Log.d(TAG, "run() returned: " + e);
+                                    e.printStackTrace();
+                                } finally {
+                                    try {
+                                        bw.close();
+                                        fw.close();
+                                    } catch (IOException e) {
+                                        Log.d(TAG, "run: e = " + e);
+                                        e.printStackTrace();
+                                    }
+                                }
+//                            }
+//                        }).start();
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        Log.d(TAG, "onError() returned: " + e);
+//                        String str = new String();
+//                        str.getBytes();
+                    }
+                });
     }
 
 }

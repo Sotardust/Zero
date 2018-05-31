@@ -1,8 +1,15 @@
 package com.dai.zero.main.util;
 
+import com.dai.zero.bean.FindBean;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -1134,6 +1141,44 @@ public class ParamAnalysisUtil {
         } finally {
             return hashMap;
         }
+    }
+
+    //解析html文件获取bean数据
+    public static FindBean getFindData() {
+
+        ArrayList<String> imageList = new ArrayList<>();
+        ArrayList<String> titleList = new ArrayList<>();
+        ArrayList<String> addressList = new ArrayList<>();
+
+        Document document = Jsoup.parse(neteaseContent);
+        Elements elements = document.select("ul");
+        for (Element element : elements) {
+            for (Element element1 : element.children()) {
+                for (Element element2 : element1.children()) {
+                    for (Element element3 : element2.children()) {
+                        String image = element3.attr("src");
+                        String title = element3.attr("title");
+                        String address = element3.attr("href");
+
+                        if (!image.isEmpty()) imageList.add(image);
+
+                        if (!title.isEmpty() && imageList.size() > titleList.size())
+                            titleList.add(title);
+
+                        if (!address.isEmpty() && imageList.size() > addressList.size()) {
+                            addressList.add(address);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        FindBean findBean = new FindBean();
+        findBean.setTitleList(titleList);
+        findBean.setImageList(imageList);
+        findBean.setAddressList(addressList);
+        return findBean;
+
     }
 
 }

@@ -19,6 +19,7 @@ import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.main.main.find.FindFragment;
 import com.dai.zero.main.main.mine.MineFragment;
 import com.dai.zero.main.main.transceiver.TransceiverFragment;
+import com.dai.zero.util.callback.OnPageChangerCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,22 +114,11 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
         viewPager.setCurrentItem(0);
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                Log.d(TAG, "onPageScrolled() returned: " + position);
-            }
-
+        viewPager.addOnPageChangeListener(new OnPageChangerCallback() {
             @Override
             public void onPageSelected(int position) {
-
-                Log.d(TAG, "onPageSelected() called with: position = [" + position + "]");
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
+                super.onPageSelected(position);
+                viewPager.setCurrentItem(position);
             }
         });
 
