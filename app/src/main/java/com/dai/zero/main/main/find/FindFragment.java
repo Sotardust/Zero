@@ -191,7 +191,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         adapter.setRecycleItemClickListener(new RecycleItemClickListener() {
             @Override
             public void onItemClickListener(int type, String value, int position) {
-//                Toast.makeText(getContext(), value, Toast.LENGTH_SHORT).show();
+
                 switch (type) {
                     case -2:
                         Log.d(TAG, "BANNER_VIEW() returned: " + position);
@@ -286,7 +286,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     }
 
     private void getSong() {
-        Log.d(TAG, "getSong: ");
+
         Observable.create(new ObservableCallback<String>() {
 
             @Override

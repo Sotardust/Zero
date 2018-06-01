@@ -47,8 +47,6 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
     ImageView loadImage;
     @BindView(R.id.ll_load)
     LinearLayout llLoad;
-//    @BindView(R.id.btn)
-//    Button btn;
 
     private View view;
     private AnimationDrawable animationDrawable;
@@ -66,14 +64,7 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
         Log.d(TAG, "onCreateView: ");
         unbinder = ButterKnife.bind(this, view);
         isFirstVisible = true;
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getContext(), AActivity.class);
-//                startActivity(intent);
-////                getActivity().finish();
-//            }
-//        });
+
 //        if (isVisibleToUser()) {
 //            onFragmentFirstVisible();
 //        }

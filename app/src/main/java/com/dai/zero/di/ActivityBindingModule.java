@@ -2,7 +2,6 @@ package com.dai.zero.di;
 
 import com.dai.zero.main.leftmain.LeftMainModule;
 import com.dai.zero.main.MainActivity;
-import com.dai.zero.main.main.AActivity;
 import com.dai.zero.main.main.MainModule;
 import com.dai.zero.main.main.find.FindModule;
 import com.dai.zero.main.main.mine.MineModule;
@@ -31,7 +30,7 @@ public abstract class ActivityBindingModule {
 //    @ContributesAndroidInjector(modules = {FindModule.class, MineModule.class, TransceiverModule.class})
 //    abstract MainFragment MainFragment();
 
-    @ActivityScoped
-    @ContributesAndroidInjector()
-    abstract AActivity aActivity();
+//    @ActivityScoped
+//    @ContributesAndroidInjector()
+//    abstract AActivity aActivity();
 }
