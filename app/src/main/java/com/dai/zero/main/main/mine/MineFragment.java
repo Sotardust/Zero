@@ -28,6 +28,9 @@ import butterknife.Unbinder;
 
 @ActivityScoped
 public class MineFragment extends BaseFragment implements MineContract.View {
+
+    private static final String TAG = "MineFragment";
+
     @BindView(R.id.module_recycle_mine)
     RecyclerView recyclerView;
     Unbinder unbinder;
@@ -44,23 +47,32 @@ public class MineFragment extends BaseFragment implements MineContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.module_fragment_mine, container, false);
         unbinder = ButterKnife.bind(this, view);
-        bindView();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.takeView(this);
+        presenter.traversalSong();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        presenter.takeView(this);
         unbinder.unbind();
     }
 
+
     @Override
     public void bindView() {
-        presenter.searchSong();
+
     }
 
     @Override
     public void showRecyclerView(ArrayList<File> files) {
+
         MainAdapter adapter = new MainAdapter();
         ArrayList<String> names = new ArrayList<>();
         for (File file : files) {

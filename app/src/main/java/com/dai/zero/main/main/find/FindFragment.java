@@ -2,7 +2,6 @@ package com.dai.zero.main.main.find;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.dai.zero.BaseFragment;
 import com.dai.zero.R;
@@ -23,15 +21,13 @@ import com.dai.zero.di.GlideApp;
 import com.dai.zero.http.okhttp.OkHttpUtil;
 import com.dai.zero.main.util.MyItemDecoration;
 import com.dai.zero.main.util.ParamAnalysisUtil;
+import com.dai.zero.util.FileUtil;
 import com.dai.zero.util.callback.ObservableCallback;
 import com.dai.zero.util.callback.ObserverCallback;
 import com.dai.zero.util.listener.RecycleItemClickListener;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -201,7 +197,6 @@ public class FindFragment extends BaseFragment implements FindContract.View {
                         Log.d(TAG, "BANNER_VIEW() returned: " + position);
                         break;
                     case -1:
-                        Log.d(TAG, "BANNER_VIEW() returned: " + position);
                         getSong();
                         break;
                     case 0:
@@ -292,83 +287,51 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
     private void getSong() {
         Log.d(TAG, "getSong: ");
-        Observable.create(new ObservableCallback<InputStream>() {
+        Observable.create(new ObservableCallback<String>() {
 
             @Override
-            public void subscribe(ObservableEmitter<InputStream> emitter) throws Exception {
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
                 super.subscribe(emitter);
                 Log.d(TAG, "subscribe: ");
                 String url = "http://39.106.220.113:8080/mobile/music/qiansixi";
                 Request request = new Request.Builder()
                         .url(url)
                         .build();
+
                 Response response = OkHttpUtil.getInstance().newCall(request).execute();
                 Log.d(TAG, "subscribe: header" + response.headers().toString());
-                System.out.println("response contentLength = " + response.body().contentLength());
-                emitter.onNext(response.body().byteStream());
+                String path = FileUtil.musicPath + "富士山下.mp3";
+
+
+                FileOutputStream fileOutputStream = null;
+                try {
+                    fileOutputStream = new FileOutputStream(FileUtil.createNewFile(path));
+                    byte[] bytes1 = response.body().bytes();
+                    fileOutputStream.write(bytes1);
+                    fileOutputStream.flush();//将内容一次性写入文件
+
+                } catch (IOException e) {
+                    Log.d(TAG, "run() returned: " + e);
+                    e.printStackTrace();
+                } finally {
+                    fileOutputStream.close();
+                    fileOutputStream = null;
+                    emitter.onNext("写入成功");
+                }
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new ObserverCallback<InputStream>() {
+                .subscribe(new ObserverCallback<String>() {
                     @Override
-                    public void onNext(final InputStream inputStream) {
-                        super.onNext(inputStream);
-//                        System.out.println("inputStream.reset() = " + inputStream..reset());
-//                        new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Looper.prepare();
-
-                                String path = Environment.getExternalStorageDirectory() + File.separator + "Music" + File.separator + "富士山下.mp3";
-                                Log.d(TAG, "onNext: path = " + path);
-                                File file1 = new File(path);
-                                if (!file1.exists()) {
-                                    try {
-                                        file1.createNewFile();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-//                                File file = new File(Environment.getExternalStorageDirectory(), "牵丝戏11.mp3");// 设置路径
-//                                Looper.loop();
-                                FileWriter fw = null;//以追加的模式将字符写入
-                                BufferedWriter bw = null;//以追加的模式将字符写入
-                                try {
-                                    fw = new FileWriter(file1, true);
-                                    bw = new BufferedWriter(fw);//又包裹一层缓冲流 增强IO功能
-                                    byte[] bytes = new byte[10508323];
-                                    int lenght = inputStream.read(bytes);
-                                    System.out.println("inputStream.read(bytes) = " + lenght);
-                                    bw.write(lenght);
-                                    bw.flush();//将内容一次性写入文件
-
-//                            FileOutputStream outputStream = new FileOutputStream(file, true);
-                                    Log.d(TAG, "onNext: 写入完成");
-                                    Toast.makeText(getContext(), "写入成功", Toast.LENGTH_SHORT).show();
-                                } catch (IOException e) {
-                                    Log.d(TAG, "run() returned: " + e);
-                                    e.printStackTrace();
-                                } finally {
-                                    try {
-                                        bw.close();
-                                        fw.close();
-                                    } catch (IOException e) {
-                                        Log.d(TAG, "run: e = " + e);
-                                        e.printStackTrace();
-                                    }
-                                }
-//                            }
-//                        }).start();
-
-
+                    public void onNext(final String response) {
+                        super.onNext(response);
+                        System.out.println("response = " + response);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
                         Log.d(TAG, "onError() returned: " + e);
-//                        String str = new String();
-//                        str.getBytes();
                     }
                 });
     }

@@ -3,6 +3,7 @@ package com.dai.zero.main;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import com.dai.zero.adapter.BaseFragmentPageAdapter;
 import com.dai.zero.main.leftmain.LeftMainFragment;
 import com.dai.zero.main.main.MainFragment;
 import com.dai.zero.main.rightmain.RightMainFragment;
+import com.dai.zero.util.FileUtil;
 import com.dai.zero.util.callback.OnPageChangerCallback;
 
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class MainActivity extends BaseActivity {
     //    @Inject
 //    Lazy<MainFragment> mainFragmentProvider;
     private static final int REQUEST_CODE = 1;
-    private String[] requestPermissions = {
+    private static final String[] requestPermissions = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.INTERNET,
@@ -77,7 +79,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_activity_main);
         ButterKnife.bind(this);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, requestPermissions, REQUEST_CODE);
         }
 //        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mainFragment, R.id.contentFrame);
@@ -170,6 +172,17 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE) {
+            FileUtil fileUtil = new FileUtil();
+            fileUtil.createDirectory();
+            fileUtil.createLogFile();
+        }
+    }
+
 
     @Override
     public void onTrimMemory(int level) {

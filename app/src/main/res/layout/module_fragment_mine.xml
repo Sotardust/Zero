@@ -15,10 +15,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/module_recycle_mine"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
-    <TextView
-        android:text="ceshi "
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="match_parent" />
+
 
 </LinearLayout>

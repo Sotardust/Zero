@@ -1,6 +1,5 @@
 package com.dai.zero.main.main.transceiver;
 
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import com.dai.zero.BaseFragment;
 import com.dai.zero.R;
 import com.dai.zero.di.ActivityScoped;
-import com.dai.zero.main.main.AActivity;
 
 import javax.inject.Inject;
 
@@ -50,8 +47,8 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
     ImageView loadImage;
     @BindView(R.id.ll_load)
     LinearLayout llLoad;
-    @BindView(R.id.btn)
-    Button btn;
+//    @BindView(R.id.btn)
+//    Button btn;
 
     private View view;
     private AnimationDrawable animationDrawable;
@@ -69,14 +66,14 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
         Log.d(TAG, "onCreateView: ");
         unbinder = ButterKnife.bind(this, view);
         isFirstVisible = true;
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), AActivity.class);
-                startActivity(intent);
-//                getActivity().finish();
-            }
-        });
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getContext(), AActivity.class);
+//                startActivity(intent);
+////                getActivity().finish();
+//            }
+//        });
 //        if (isVisibleToUser()) {
 //            onFragmentFirstVisible();
 //        }

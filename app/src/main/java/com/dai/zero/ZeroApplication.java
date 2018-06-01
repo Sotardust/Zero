@@ -26,7 +26,7 @@ public class ZeroApplication extends DaggerApplication {
         return DaggerAppComponent.builder().application(this).build();
     }
 
-    private  RefWatcher refWatcher;
+    private RefWatcher refWatcher;
 
     @Override
     public void onCreate() {

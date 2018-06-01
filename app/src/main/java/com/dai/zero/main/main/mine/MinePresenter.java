@@ -4,10 +4,10 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.dai.zero.di.ActivityScoped;
+import com.dai.zero.util.LogUtil;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -37,21 +37,18 @@ public class MinePresenter implements MineContract.Presenter {
     }
 
     @Override
-    public void searchSong() {
-//        String path = Environment.getRootDirectory().getAbsolutePath() + "/netease";
-        String path =  "/storage/sdcard0/netease";
-        System.out.println("path = " + path);
-//        /storage/sdcard0/netease
+    public void traversalSong() {
+
+        String path = Environment.getExternalStorageDirectory() + File.separator + "Music";
         File file = new File(path);
         if (!file.exists()) {
+            LogUtil.writeInfo(TAG, "traversalSong", path + "路径不存在");
             Log.d(TAG, "searchSong: " + path + "路径不存在");
             return;
         }
         if (!filePaths.isEmpty()) filePaths.clear();
-        findSong(path);
-
+        searchSongFile(path);
         mMineView.showRecyclerView(filePaths);
-
     }
 
     /**
@@ -59,7 +56,7 @@ public class MinePresenter implements MineContract.Presenter {
      *
      * @param path 路径
      */
-    private void findSong(String path) {
+    private void searchSongFile(String path) {
         File file1 = new File(path);
         File[] files = file1.listFiles();
         System.out.println("files.length = " + files.length);
@@ -69,7 +66,7 @@ public class MinePresenter implements MineContract.Presenter {
                 filePaths.add(file);
 
             } else if (file.isDirectory())
-                findSong(file.getPath());
+                searchSongFile(file.getPath());
         }
     }
 }

@@ -13,10 +13,11 @@ import java.util.ArrayList;
 public interface MineContract {
     interface View extends BaseView<Presenter> {
         void bindView();
+
         void showRecyclerView(ArrayList<File> files);
     }
 
     interface Presenter extends BasePresenter<View> {
-        void searchSong();
+        void traversalSong();
     }
 }
