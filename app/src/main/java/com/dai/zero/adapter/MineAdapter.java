@@ -12,37 +12,39 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by dai on 2018/2/24.
+ * Created by Administrator on 2018/6/3 0003.
  */
 
-public class MainAdapter extends BaseAdapter<String> {
+public class MineAdapter extends BaseAdapter<String> {
+
 
     @Override
     public RecyclerView.ViewHolder onCreateView(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_main, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.module_recycle_item_mine, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindView(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ViewHolder) {
-            ((ViewHolder) holder).itemContent.setText(data.get(position));
-            ((ViewHolder) holder).itemContent.setOnClickListener(new View.OnClickListener() {
+            ((ViewHolder) holder).content.setText(data.get(position));
+            ((ViewHolder) holder).content.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     listener.onItemClickListener(0, data.get(position), position);
                 }
             });
         }
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_content)
-        TextView itemContent;
+        @BindView(R.id.module_tv_content)
+        TextView content;
 
-        ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
         }
     }
 }

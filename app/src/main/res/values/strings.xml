@@ -22,6 +22,12 @@
         <item>其他</item>
     </string-array>
 
+    <string-array name="module_mine_content">
+        <item>本地歌曲</item>
+        <item>最近播放</item>
+        <item>下载管理</item>
+    </string-array>
+
     <!--Find页面相关字符串-->
     <string name="module_private_fm">私人FM</string>
     <string name="module_daily_recommendation">每日推荐</string>

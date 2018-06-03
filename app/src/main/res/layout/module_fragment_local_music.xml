@@ -5,8 +5,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/module_recycle_mine"
+        android:id="@+id/module_recycle_local_music"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 </LinearLayout>

@@ -85,10 +85,10 @@
     <!--android:layout_height="match_parent">-->
 
     <com.dai.zero.MyViewPager
-    android:id="@+id/contentFrame"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    android:descendantFocusability="blocksDescendants" />
+        android:id="@+id/contentFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:descendantFocusability="blocksDescendants" />
 
 </LinearLayout>

@@ -14,10 +14,10 @@ public interface MineContract {
     interface View extends BaseView<Presenter> {
         void bindView();
 
-        void showRecyclerView(ArrayList<File> files);
+        void showRecyclerView();
     }
 
     interface Presenter extends BasePresenter<View> {
-        void traversalSong();
+
     }
 }
