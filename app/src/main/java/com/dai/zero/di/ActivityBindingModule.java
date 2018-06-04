@@ -5,8 +5,8 @@ import com.dai.zero.main.MainActivity;
 import com.dai.zero.main.main.MainModule;
 import com.dai.zero.main.main.find.FindModule;
 import com.dai.zero.main.main.mine.MineModule;
-import com.dai.zero.main.main.mine.local.LocalMusicActivity;
-import com.dai.zero.main.main.mine.local.LocalMusicModule;
+import com.dai.zero.main.main.local.LocalMusicActivity;
+import com.dai.zero.main.main.local.LocalMusicModule;
 import com.dai.zero.main.main.transceiver.TransceiverModule;
 import com.dai.zero.main.rightmain.RightMainModule;
 

@@ -14,12 +14,11 @@ import com.dai.zero.BaseFragment;
 import com.dai.zero.R;
 import com.dai.zero.adapter.MineAdapter;
 import com.dai.zero.di.ActivityScoped;
-import com.dai.zero.main.main.mine.local.LocalMusicActivity;
+import com.dai.zero.main.main.local.LocalMusicActivity;
 import com.dai.zero.util.listener.RecycleItemClickListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Inject;
 

@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.main.mine.local.LocalMusicActivity" />
+        <activity android:name=".main.main.local.LocalMusicActivity" />
         <!--<activity android:name=".BaseActivity" />-->
         <provider
             android:name="android.support.v4.content.FileProvider"

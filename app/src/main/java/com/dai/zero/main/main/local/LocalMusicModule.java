@@ -1,8 +1,7 @@
-package com.dai.zero.main.main.mine.local;
+package com.dai.zero.main.main.local;
 
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.di.FragmentScoped;
-import com.dai.zero.main.main.mine.MinePresenter;
 
 import dagger.Binds;
 import dagger.Module;

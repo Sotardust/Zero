@@ -35,8 +35,6 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
     @BindView(R.id.text_1)
     TextView text1;
     Unbinder unbinder;
-    @BindView(R.id.show_1)
-    TextView show1;
     @BindView(R.id.show_2)
     TextView show2;
     @BindView(R.id.show_3)
@@ -108,7 +106,7 @@ public class TransceiverFragment extends BaseFragment implements TransceiverCont
 
     @Override
     public void showTestView1(String string) {
-        show1.setText(string);
+
     }
 
     @Override

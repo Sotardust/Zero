@@ -1,4 +1,4 @@
-package com.dai.zero.main.main.mine.local;
+package com.dai.zero.main.main.local;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,13 +12,11 @@ import android.view.ViewGroup;
 import com.dai.zero.BaseFragment;
 import com.dai.zero.R;
 import com.dai.zero.adapter.MainAdapter;
-import com.dai.zero.adapter.MineAdapter;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.util.listener.RecycleItemClickListener;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.inject.Inject;
 

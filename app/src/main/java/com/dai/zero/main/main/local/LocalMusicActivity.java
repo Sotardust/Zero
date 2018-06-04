@@ -1,4 +1,4 @@
-package com.dai.zero.main.main.mine.local;
+package com.dai.zero.main.main.local;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
