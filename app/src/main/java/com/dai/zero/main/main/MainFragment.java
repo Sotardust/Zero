@@ -97,16 +97,17 @@ public class MainFragment extends BaseFragment implements MainContract.View, Swi
 
     @Override
     public void bindViews() {
+
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
 //        recyclerView.setLayoutManager(layoutManager);
 //        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light);
 //        swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
 //        swipeRefreshLayout.setOnRefreshListener(this);
+
         List<Fragment> mFragmentList = new ArrayList<>();
         mFragmentList.add(findFragment);
         mFragmentList.add(mineFragment);
         mFragmentList.add(transceiverFragment);
-
 
 //        BaseFragmentPageAdapter adapter = new BaseFragmentPageAdapter(getChildFragmentManager(),mFragmentList);
 

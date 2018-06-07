@@ -86,7 +86,13 @@ public class FindFragment extends BaseFragment implements FindContract.View {
         if (isVisibleToUser()) {
             onFragmentFirstVisible();
         }
-
+        String a = "abd";
+        String b = "abd";
+        String c = new String("abd");
+        System.out.println("(a.equals(b)) = " + (a.equals(b)));
+        System.out.println("(a == b) = " + (a == b));
+        System.out.println("(a.equals(c)) = " + (a.equals(c)));
+        System.out.println("(a==c) = " + (a==c));
         return view;
     }
 
