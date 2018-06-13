@@ -1,0 +1,1 @@
+生成Javadoc 在＂Tools-> gerenate JavaDoc”面版的 other command line arguments 栏里输入：-encoding utf-8 -charset utf-8
