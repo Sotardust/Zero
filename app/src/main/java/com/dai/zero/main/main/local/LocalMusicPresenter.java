@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import com.dai.zero.BuildConfig;
 import com.dai.zero.di.ActivityScoped;
-import com.dai.zero.util.FileType;
-import com.dai.zero.util.LogUtil;
+import com.dai.zero.storage.file.FileType;
+import com.dai.zero.storage.file.LogUtil;
 
 import java.io.File;
 import java.util.ArrayList;

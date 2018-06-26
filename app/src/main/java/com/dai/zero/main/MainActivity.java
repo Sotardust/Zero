@@ -23,7 +23,7 @@ import com.dai.zero.adapter.BaseFragmentPageAdapter;
 import com.dai.zero.main.leftmain.LeftMainFragment;
 import com.dai.zero.main.main.MainFragment;
 import com.dai.zero.main.rightmain.RightMainFragment;
-import com.dai.zero.util.FileUtil;
+import com.dai.zero.storage.file.FileUtil;
 import com.dai.zero.util.callback.OnPageChangerCallback;
 
 import java.util.ArrayList;

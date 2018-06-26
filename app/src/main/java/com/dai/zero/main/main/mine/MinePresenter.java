@@ -1,13 +1,6 @@
 package com.dai.zero.main.main.mine;
 
-import android.os.Environment;
-import android.util.Log;
-
 import com.dai.zero.di.ActivityScoped;
-import com.dai.zero.util.LogUtil;
-
-import java.io.File;
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 

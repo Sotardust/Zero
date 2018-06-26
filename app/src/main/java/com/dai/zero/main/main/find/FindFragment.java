@@ -21,7 +21,7 @@ import com.dai.zero.di.GlideApp;
 import com.dai.zero.http.okhttp.OkHttpUtil;
 import com.dai.zero.main.util.MyItemDecoration;
 import com.dai.zero.main.util.ParamAnalysisUtil;
-import com.dai.zero.util.FileUtil;
+import com.dai.zero.storage.file.FileUtil;
 import com.dai.zero.util.callback.ObservableCallback;
 import com.dai.zero.util.callback.ObserverCallback;
 import com.dai.zero.util.listener.RecycleItemClickListener;
