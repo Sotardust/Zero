@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.dai.zero.BaseFragment;
 import com.dai.zero.R;
+import com.dai.zero.adapter.LocalMusicAdapter;
 import com.dai.zero.adapter.MainAdapter;
 import com.dai.zero.di.ActivityScoped;
 import com.dai.zero.util.listener.RecycleItemClickListener;
@@ -64,12 +66,15 @@ public class LocalMusicFragment extends BaseFragment implements LocalMusicContra
 
     @Override
     public void showRecyclerView(final ArrayList<File> files) {
-        MainAdapter adapter = new MainAdapter();
-        ArrayList<String> names = new ArrayList<>();
+        LocalMusicAdapter adapter = new LocalMusicAdapter();
+        ArrayList<String> songNameList = new ArrayList<>();
+        ArrayList<String> usernameList = new ArrayList<>();
         for (File file : files) {
-            names.add(file.getName());
+            songNameList.add(presenter.parseSongName(file.getName()));
+            usernameList.add(presenter.parseUsername(file.getName()));
         }
-        adapter.setData(names);
+        adapter.setData(songNameList);
+        adapter.setUsernameList(usernameList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -77,9 +82,15 @@ public class LocalMusicFragment extends BaseFragment implements LocalMusicContra
             @Override
             public void onItemClickListener(int type, String value, int position) {
                 super.onItemClickListener(type, value, position);
-                String path = files.get(position).getPath();
-                Log.d(TAG, "onItemClickListener: path " + path);
-                presenter.playMusic(getContext(), path);
+                switch (type) {
+                    case 0:
+                        String path = files.get(position).getPath();
+                        presenter.playMusic(getContext(), path);
+                        break;
+                    case 1:
+                        Toast.makeText(getContext(), "选择项", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         });
     }

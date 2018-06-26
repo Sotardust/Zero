@@ -1,13 +1,6 @@
 package com.dai.zero.storage.file;
 
-import android.os.Environment;
 import android.util.Log;
-
-import com.dai.zero.BuildConfig;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by dai on 2018/6/1.

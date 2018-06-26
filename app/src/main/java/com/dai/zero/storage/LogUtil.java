@@ -1,6 +1,9 @@
-package com.dai.zero.storage.file;
+package com.dai.zero.storage;
 
 import android.util.Log;
+
+import com.dai.zero.storage.file.FileUtil;
+import com.dai.zero.storage.file.PathUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;

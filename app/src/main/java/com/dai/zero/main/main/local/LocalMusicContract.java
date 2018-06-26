@@ -23,5 +23,9 @@ public interface LocalMusicContract {
         void traversalSong();
 
         void playMusic(Context context, String path);
+
+        String parseSongName(String path);
+
+        String parseUsername(String path);
     }
 }

@@ -2,6 +2,8 @@ package com.dai.zero.storage.file;
 
 import android.util.Log;
 
+import com.dai.zero.storage.LogUtil;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -21,7 +21,9 @@ import com.dai.zero.di.GlideApp;
 import com.dai.zero.http.okhttp.OkHttpUtil;
 import com.dai.zero.main.util.MyItemDecoration;
 import com.dai.zero.main.util.ParamAnalysisUtil;
+import com.dai.zero.storage.file.FileManager;
 import com.dai.zero.storage.file.FileUtil;
+import com.dai.zero.storage.file.PathUtil;
 import com.dai.zero.util.callback.ObservableCallback;
 import com.dai.zero.util.callback.ObserverCallback;
 import com.dai.zero.util.listener.RecycleItemClickListener;
@@ -306,12 +308,12 @@ public class FindFragment extends BaseFragment implements FindContract.View {
 
                 Response response = OkHttpUtil.getInstance().newCall(request).execute();
                 Log.d(TAG, "subscribe: header" + response.headers().toString());
-                String path = FileUtil.musicPath + "富士山下.mp3";
+                String path = PathUtil.MUSIC_PATH + "富士山下.mp3";
 
 
                 FileOutputStream fileOutputStream = null;
                 try {
-                    fileOutputStream = new FileOutputStream(FileUtil.createNewFile(path));
+                    fileOutputStream = new FileOutputStream(FileManager.getInstance().createNewFile(path));
                     byte[] bytes1 = response.body().bytes();
                     fileOutputStream.write(bytes1);
                     fileOutputStream.flush();//将内容一次性写入文件

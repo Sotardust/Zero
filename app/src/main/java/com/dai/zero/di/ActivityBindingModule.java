@@ -1,6 +1,5 @@
 package com.dai.zero.di;
 
-import com.dai.zero.main.MainFragment;
 import com.dai.zero.main.leftmain.LeftMainModule;
 import com.dai.zero.main.MainActivity;
 import com.dai.zero.main.main.MainModule;
@@ -26,7 +25,6 @@ public abstract class ActivityBindingModule {
 
     @ActivityScoped
     @ContributesAndroidInjector(modules = {
-            MainFragment.class,
             LeftMainModule.class,
             MainModule.class,
             RightMainModule.class,

@@ -11,8 +11,9 @@ import android.widget.Toast;
 
 import com.dai.zero.BuildConfig;
 import com.dai.zero.di.ActivityScoped;
+import com.dai.zero.storage.LogUtil;
 import com.dai.zero.storage.file.FileType;
-import com.dai.zero.storage.file.LogUtil;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -99,6 +100,25 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter {
         }
     }
 
+    @Override
+    public String parseSongName(String path) {
+        if (path != null) {
+            String[] strings = path.split("-");
+            String[] songName = strings[1].split(".");
+            return songName[0];
+        }
+        return null;
+    }
+
+    @Override
+    public String parseUsername(String path) {
+        if (path != null) {
+            String[] username = path.split("-");
+            return username[0];
+        }
+        return null;
+    }
+
     /**
      * 遍历查找歌曲文件
      *
@@ -117,4 +137,6 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter {
                 searchSongFile(file.getPath());
         }
     }
+
+
 }
