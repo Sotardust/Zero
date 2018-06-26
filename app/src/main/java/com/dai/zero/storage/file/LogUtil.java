@@ -17,7 +17,7 @@ public class LogUtil {
 
     private static final String TAG = "LogUtil";
 
-    private static final String logPath = FileUtil.logPath + FileUtil.logFile;
+    private static final String logPath = PathUtil.LOG_PATH + FileUtil.LOG_FILE;
 
     private LogUtil() {
     }

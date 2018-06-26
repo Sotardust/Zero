@@ -23,6 +23,7 @@ import com.dai.zero.adapter.BaseFragmentPageAdapter;
 import com.dai.zero.main.leftmain.LeftMainFragment;
 import com.dai.zero.main.main.MainFragment;
 import com.dai.zero.main.rightmain.RightMainFragment;
+import com.dai.zero.storage.file.FileManager;
 import com.dai.zero.storage.file.FileUtil;
 import com.dai.zero.util.callback.OnPageChangerCallback;
 
@@ -177,9 +178,8 @@ public class MainActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE) {
-            FileUtil fileUtil = new FileUtil();
-            fileUtil.createDirectory();
-            fileUtil.createLogFile();
+            //请求权限后必须创建日志文件
+            FileUtil.createLogFile();
         }
     }
 
