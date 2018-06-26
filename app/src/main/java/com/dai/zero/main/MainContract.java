@@ -11,8 +11,10 @@ public interface MainContract {
 
     interface View extends BaseView<Presenter> {
         boolean isActive();
+        void initViews();
     }
 
     interface Presenter extends BasePresenter<View> {
+        void initData();
     }
 }

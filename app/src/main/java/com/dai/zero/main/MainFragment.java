@@ -49,4 +49,9 @@ public class MainFragment extends BaseFragment implements MainContract.View {
     public boolean isActive() {
         return isAdded();
     }
+
+    @Override
+    public void initViews() {
+
+    }
 }

@@ -25,11 +25,15 @@ public class MainPresenter implements MainContract.Presenter {
     @Override
     public void takeView(MainContract.View view) {
         this.mMainView = view;
-
     }
 
     @Override
     public void dropView() {
         mMainView = null;
+    }
+
+    @Override
+    public void initData() {
+
     }
 }
