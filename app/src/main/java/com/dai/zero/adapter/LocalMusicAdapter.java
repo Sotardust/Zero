@@ -70,7 +70,7 @@ public class LocalMusicAdapter extends BaseAdapter<String> {
     enum Type {
         TV(0), IV(1);
 
-        Type(int index) {
+        Type(int i) {
         }
     }
 
