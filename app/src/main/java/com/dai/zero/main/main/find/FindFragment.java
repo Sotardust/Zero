@@ -192,6 +192,8 @@ public class FindFragment extends BaseFragment implements FindContract.View {
             }
         });
 
+
+
         recycleView.addItemDecoration(decoration);
         recycleView.setLayoutManager(layoutManager);
         recycleView.setAdapter(adapter);
@@ -250,7 +252,7 @@ public class FindFragment extends BaseFragment implements FindContract.View {
     public void showLoading() {
         if (isFirstVisible()) {
             llLoad.setVisibility(View.VISIBLE);
-            loadImage = (ImageView) view.findViewById(R.id.load_image);
+            loadImage = view.findViewById(R.id.load_image);
             loadImage.setImageResource(R.drawable.module_load_anim);
             animationDrawable = (AnimationDrawable) loadImage.getDrawable();
             animationDrawable.start();
